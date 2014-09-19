@@ -1,0 +1,47 @@
+@(currentPage: Integer, pageCount: Integer, blockPageSize: Integer,url:Integer)
+
+@if(pageCount>1){
+  <ul class="pagination pull-right">
+
+		@if(currentPage == 1) {
+			<li class="disabled"><span>&laquo;</span></li>
+		} else {
+      @if(url==0){
+
+			<li><a href="/home?page=@{val x = currentPage-1;x}">&laquo;</a></li>
+      }
+      @if(url!=0){
+
+      <li><a href="/home?status=@url&page=@{val x = currentPage-1;x}">&laquo;</a></li>
+      }
+
+		}
+
+		@for(index <- utils.TemplateHelpers.createRange(currentPage, blockPageSize, pageCount)) {
+			@if(currentPage == index) {
+			  <li class="disabled"><span>@index</span></li>
+			} else {
+                @if(url==0){
+				<li><a href="/home?page=@index">@index</a></li>
+                }
+                @if(url!=0){
+                <li><a href="/home?status=@url&page=@index">@index</a></li>
+                }
+			}
+		}
+
+		@if(currentPage == (pageCount)) {
+			<li class="disabled"><span>&raquo;</span></li>
+		} else {
+
+            @if(url==0){
+			<li><a href="/home?page=@{val x = currentPage+1;x}">&raquo;</a></li>
+            }
+            @if(url!=0){
+            <li><a href="/home?status=@url&page=@{val x = currentPage+1;x}">&raquo;</a></li>
+            }
+        }
+
+    </ul>
+
+}

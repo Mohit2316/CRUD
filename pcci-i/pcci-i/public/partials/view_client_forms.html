@@ -1,0 +1,192 @@
+<div class="menu" ng-show="menuStatus">
+
+
+    <div ng-repeat="sectionItem in menuItems">
+        <div class="panel-group" id="accordion">
+            <div class="panel" style="background:inherit;">
+                <div class="menuitem menu-section-header">
+                    <div class="panel-title">
+                        <div class="menu-text-head" data-toggle="collapse" data-parent="#accordion" href="#{{$index}}">
+                            {{sectionItem.name}}<img src="/assets/images/down_arrow_icn.png" style="width:12px;height:12px;padding-left:6px"></div></div></div>
+
+                <div id="{{$index}}" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div ng-show="sectionItem.name != 'Referral History'">
+                        <div class="menuitem" ng-repeat="item in sectionItem.items" ><div ng-if="sectionItem.name!='Documents'"><a href="{{item.link}}" target="_self" class="menu-text1"><div >{{item.name}}</div></a></div><div ng-if="sectionItem.name=='Documents'"><div  class="menu-text1" tooltip-html-unsafe="{{item.name}}<br/>Created On:{{item.date}}" >{{item.name}}</div></div>
+                            <div ng-if="sectionItem.name=='Documents'" class="fc-vismedgray" style="padding-left:30px;font-size:12px;">Created on: {{item.date}}</div>
+                        </div>
+                    </div>
+
+                    <div ng-show="sectionItem.name == 'Referral History'">
+                        <div ng-show="!isEmpty(sectionItem.items)">
+                            <div class="menuitem menu-text1" style="font-size: 13px;" ng-repeat="item in sectionItem.items" >
+                                <b>{{item.item1name}}: {{item.item1}}</b>
+                                <div>{{item.item2name}}: {{item.item2}}</div>
+                                <div>{{item.item3name}}: {{item.item3}}</div>
+                                <div>{{item.item4name}}: {{item.item4}}</div>
+                            </div>
+                        </div>
+                        <div class="menuitem menu-text1" style="font-size: 13px;" ng-show="isEmpty(sectionItem.items)">
+                            <div>No Referral History</div>
+                        </div>
+                        <br>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" style="padding-left:10%;" class="user_text1 menuHeadingsSmall fc-litblue helv-bold">View Goals</a><br>
+    <a href="#" style="padding-left:10%;" class="user_text1 menuHeadingsSmall fc-litblue helv-bold">View iCCD</a>
+</div>
+
+
+
+<script>
+    function isNumberKey(evt){
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+    function valssn(t) {
+        var val = t.value.replace(/\D/g, '');
+        var newVal = '';
+        if(val.length > 4) {
+            t.value = val;
+        }
+        if((val.length > 3) && (val.length < 6)) {
+            newVal += val.substr(0, 3) + '-';
+            val = val.substr(3);
+        }
+        if (val.length > 5) {
+            newVal += val.substr(0, 3) + '-';
+            newVal += val.substr(3, 2) + '-';
+            val = val.substr(5);
+        }
+        newVal += val;
+        t.value = newVal;
+    }
+
+</script>
+
+
+<div class="col-md-9">
+    <form name="validation" class="form-horizontal" role="form" action="/saveclientform" method="POST" novalidate>
+    <div class="panel panel-default bg-white pnlWidth">
+        <div class="panel-heading" style="overflow:hidden;text-align:left;">
+            <h3 class="panel-title fc-darkgray" style="display:inline;position:relative;top:1vh;left:3vh;font-size:25px;">
+            {{formname}}</h3>
+            <input type="hidden" name="client_id" value="{{clientId}}">
+            <div class="btn-group bootstrap-select ng-pristine ng-valid" style="width:90px;float:right">
+                <button type="submit" onclick="getseq()" class="btn btnhover" ng-disabled="formIfValid(validation.$valid)" style="padding-top:4%">Submit</button>
+            </div>
+        </div><div class="formPanelBody">
+        <div ng-repeat="qcat in pm1|unique: 'qcat'">
+        <div class="questionHeading">
+            <span class="helv-thin fc-darkblue" style="font-size:30px;">{{qcat}}</span>
+        </div>
+
+        <div style="padding:2%;">
+
+            <div ng-if="item.qcategory == qcat" class="form-group fb-required" ng-repeat="item in formitems">
+                <label class="control-label col-xs-3 helv-regular fc-darkgray" style="top:1vh"> {{item.question}}
+                <div style="display:inline;color:red;" ng-if="item.required">*</div>
+                </label>
+
+
+
+                <div class="control-label col-xs-6" ng-if="item.inputType == 2">
+                    <input ng-if="item.dataColumn != 'ssn' && item.required" type="text" class="form-control" id="exampleInputEmail1" name="{{item.dataColumn}}" ng-model="clientData[item.dataColumn]" value="{{clientData[item.dataColumn]}}" required />
+                    <input ng-if="item.dataColumn == 'ssn'" type="text" class="form-control" id="exampleInputEmail1" name="{{item.dataColumn}}" ng-model="clientData[item.dataColumn]" value="{{clientData[item.dataColumn]}}" onkeyup="valssn(this)" onload="valssn(this)" required />
+                    <input ng-if="!item.required" type="text" class="form-control" id="exampleInputEmail1" name="{{item.dataColumn}}" ng-model="clientData[item.dataColumn]" value="{{clientData[item.dataColumn]}}"/>
+
+                </div>
+
+
+                <div class="col-xs-9" ng-if="item.inputType == 1">
+                    <!--<div class="checkbox" >-->
+                        <!--<label >-->
+                            <!--<input ng-repeat="option in item.options" type="checkbox" name="{{item.dataColumn}}" id="optionsCheckbox1">-->
+                            <!--{{option.value}}-->
+                        <!--</label>-->
+                    <!--</div>-->
+                    <div class="checkbox ng-scope">
+                        <label class="ng-binding" ng-repeat="option in item.options">
+                            <input type="checkbox" ng-change="checkboxtostr(item.dataColumn,item.id);" ng-model="check[13][option.value]" class="ng-pristine ng-valid">
+                            {{option.value}}<br>
+                        </label>
+                        <input type="hidden" name="{{item.dataColumn}}" id="{{item.dataColumn}}" value="{{clientData[item.dataColumn]}}">
+                    </div>
+                </div>
+                <div class="control-label col-xs-9" ng-if="(item.inputType == 5) && (item.dataColumn != 'caseWorker')">
+                    <select class="form-control" style="width:30%" name="{{item.dataColumn}}">
+                    <option ng-repeat="option in item.options" value="{{option.value}}" ng-selected="{{option.value == clientData[item.dataColumn]}}">{{option.value}}</option>
+                        <!--<label>-->
+                            <!--<input type="radio" name="question{{qid}}" id="optionsRadios1">-->
+                            <!--{{option.value}}-->
+                        <!--</label>-->
+                        <option value="" style="display:none;" disabled>Select</option>
+                        </select>
+                </div>
+
+                <div class="col-xs-9" ng-if="item.inputType == 3">
+                        <label>
+                                <input type="date" kendo-date-picker name="{{item.dataColumn}}" k-format="MM/dd/yyyy" value="{{(clientData[item.dataColumn]  || todaydate) | date : 'MM/dd/yyyy'}}" style="top:1.5vh"/>
+                        </label>
+                </div>
+
+                <div class="control-label col-xs-9" ng-if="item.inputType == 4">
+                    <label style="float:left;">
+                        <input type="text" class="form-control" style="width:50%;float:left;" name="{{item.dataColumn}}" onkeypress="return isNumberKey(event)" value="{{clientData[item.dataColumn]}}" />
+                    </label>
+                </div>
+
+
+
+
+                <div class="control-label col-xs-9" ng-if="(item.inputType == 5) && (item.dataColumn == 'caseWorker')">
+                    <select class="form-control" style="width:30%" name="cm_id">
+                        <option ng-repeat="(key,value) in userlist" value="{{key}}" ng-selected="{{key == clientData[item.dataColumn]}}">{{value}}</option>
+                    </select>
+                </div>
+
+
+            </div>
+        </div>
+        </div></div>
+
+        <!--<div class="panel-footer">-->
+        <!--<div class="checkbox">-->
+        <!--<label><input type="checkbox" ng-model="isShowScope" />-->
+        <!--Show scope-->
+        <!--</label>-->
+        <!--</div>-->
+        <!--<pre ng-if="isShowScope">{{form}}</pre>-->
+        <!--</div>-->
+    </div>
+        <input name="form_id" type="hidden" value='{{formid}}'>
+        <input name="formjson" type="hidden" value='{{form}}'>
+    </form>
+
+</div>    <!--- end of col-md-9 -->
+
+
+
+<!--<div class="col-md-3">-->
+
+    <!--<div class="panel panel-default bg-white detailsPanel" > &lt;!&ndash; height and top-margin inside class detailsPanel &ndash;&gt;-->
+
+        <!--<div class="panel-heading" style="overflow:hidden;text-align:left;"> <h4>Form Details</h4>  </div>-->
+
+
+
+
+    <!--</div> &lt;!&ndash; end of panel &ndash;&gt;-->
+
+<!--</div>-->
+
+<!--d-->
+        <!--k-->
+        <!--k-->
+

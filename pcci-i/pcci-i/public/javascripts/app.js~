@@ -1,0 +1,355 @@
+'use strict';
+
+angular.module('cmlt', [
+    'kendo.directives', 'ngCookies','ngResource','ngSanitize', 'ngRoute', 'ngAnimate','builder', 'builder.components', 'validator.rules','mgcrea.ngStrap', 'nya.bootstrap.select','ui.bootstrap.modal','ui.bootstrap.tpls'
+])
+   .filter('getDate', function() {
+        return function(input, uppercase) {
+            input = input || '';
+
+            var out = "";
+            if(input.match(/[\d]+[\\\-\d]+\d+/)!=null){
+                out = input.match(/[\d]+[\/\-\d]+\d+/).pop();
+                out = new Date(out);
+                out = (out.getMonth()<9?"0" + (out.getMonth()+1):(out.getMonth()+1)) + "/" + (out.getDate()<10?"0" +out.getDate(): out.getDate()) +"/" + out.getFullYear();
+            }
+
+
+            return out;
+        };
+    })
+    .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
+        $routeProvider
+            .when('/cwdash', {
+                templateUrl: '/assets/partials/cw_cal.html',
+                controller: 'MainCtrl'
+            }).when('/pmdash', {
+                templateUrl: '/assets/partials/pm_dash.html',
+                controller: 'PMDashboardCtrl'
+            }).when('/createform',{
+                templateUrl: '/assets/partials/create_forms.html',
+                controller: 'DemoController'
+            }).when('/program/:id', {
+                templateUrl: '/assets/partials/program_detail.html',
+                controller: 'ClientPageCtrl'
+            }).when('/client/:id', {
+                templateUrl: '/assets/partials/client_page.html',
+                controller: 'ClientPageCtrl'
+            }).when('/forms', {
+                templateUrl: '/assets/partials/create_forms.html',
+                controller: 'DemoController'
+            }).when('/forms/:progName/:catName', {
+                templateUrl: '/assets/partials/create_forms.html',
+                controller: 'DemoController'
+            }).when('/editform/:id', {
+                templateUrl: '/assets/partials/edit_forms.html',
+                controller: 'DemoController1'
+            }).when('/viewform/:id', {
+                templateUrl: '/assets/partials/view_forms.html',
+                controller: 'viewFormCtrl'
+            }).when('/viewclientform/:formId/:clientId', {
+                templateUrl: '/assets/partials/view_client_forms.html',
+                controller: 'viewClientFormCtrl'
+            });
+        $locationProvider.html5Mode(true);
+
+    }])
+    .run(['$rootScope', '$location', function ($rootScope, $location) {
+
+    }]);
+
+
+angular.module('cmlt').config(function($popoverProvider) {
+    angular.extend($popoverProvider.defaults, {
+        animation: 'am-flip-x',
+        placement:'bottom',
+
+        html:true,
+        content:""
+    });
+}).controller('HeaderCtrl', [ '$scope', '$http', '$window', '$rootScope', function ($scope, $http, $window, $rootScope) {
+        $scope.locatePosition = function(event){
+
+
+
+
+            return true;
+        }
+        $scope.clickCount = 0;
+        $scope.countClick = function(){
+            $scope.clickCount++
+        };
+        $scope.logout = function($event) {
+            console.log('HTPP DELETE CALL');
+            console.log($event);
+            $http.delete('/logout').success(function(data) {
+                console.log('HTPP DELETE CALL');
+                $window.location = '/';
+            });
+        }
+        console.log("-------");
+        $scope.toggleMenu = function() {
+            $rootScope.$broadcast('toggleMenu');
+        }
+    }]);
+
+
+
+
+angular.module('cmlt').filter('unique', function () {
+
+    return function (items, filterOn) {
+
+        if (filterOn === false) {
+            return items;
+        }
+
+        if ((filterOn || angular.isUndefined(filterOn)) && angular.isArray(items)) {
+            var hashCheck = {}, newItems = [];
+
+            var extractValueToCompare = function (item) {
+                if (angular.isObject(item) && angular.isString(filterOn)) {
+                    return item[filterOn];
+                } else {
+                    return item;
+                }
+            };
+
+            angular.forEach(items, function (item) {
+                var valueToCheck, isDuplicate = false;
+
+                for (var i = 0; i < newItems.length; i++) {
+                    if (angular.equals(extractValueToCompare(newItems[i]), extractValueToCompare(item))) {
+                        isDuplicate = true;
+                        break;
+                    }
+                }
+                if (!isDuplicate) {
+                    newItems.push(item);
+                }
+
+            });
+            items = newItems;
+        }
+        return items;
+    };
+}).controller('MenuCtrl', [ '$scope', '$http', '$window', function ($scope, $http, $window) {
+
+        $scope.menuStatus = false;
+
+        $scope.handleClick = function (id) {
+            alert(id);
+        };
+        console.log("-------");
+
+        $http.get('/sidebardata').success(function(data) {
+            $scope.menuItems = data;
+        });
+        $scope.toggleMenu = function() {
+            $scope.menuStatus = !$scope.menuStatus;
+        }
+
+        $scope.$on('toggleMenu', function() {
+            $scope.toggleMenu();
+        });
+
+        $scope.$on('menuData', function(event, data) {
+            $scope.menuItems = data;
+        });
+    }]);
+
+angular.module('cmlt')
+    .controller('viewFormCtrl', [ '$scope', '$http', '$window','$routeParams', function ($scope, $http, $window,$routeParams) {
+
+        $scope.menuStatus = false;
+        $scope.check = [];
+        $scope.checkstring = "";
+        $scope.checkboxtostr = function(idname){
+            $scope.t = $scope.checkstring;
+            for(var t5 in $scope.check){
+                $scope.checkstring = t5 + ",";
+            }
+            $scope.checkstring = $scope.t + $scope.checkstring;
+            $("#"+idname).val($scope.checkstring.slice(0, - 1));
+        }
+        $scope.handleClick = function (id) {
+            alert(id);
+        };
+        console.log("-------");
+
+//        $http.get('/sidebardata').success(function(data) {
+//            $scope.menuItems = data;
+//            $http.get('/formcats').success(function(data1) {
+//                $scope.formcat = data1;
+//            });
+//        });
+        $http.get('/sidebardata').success(function(data) {
+            $scope.menuItems = data;
+            $http.get('/formcats').success(function(data1) {
+                $scope.formcat = data1;
+            });
+            $http.get('/getproglist').success(function(data2) {
+                $scope.progList = data2;
+            });
+        });
+        $scope.toggleMenu = function() {
+            $scope.menuStatus = !$scope.menuStatus;
+        }
+
+        $scope.$on('toggleMenu', function() {
+            $scope.toggleMenu();
+        });
+
+        $scope.$on('menuData', function(event, data) {
+            $scope.menuItems = data;
+        });
+
+        $http.get('/forms/'+$routeParams.id).success(function(data) {
+            $scope.formitems = [];
+            $scope.formname = data[0].CForm.name;
+            $scope.pm=[];
+            $scope.qm = [];
+
+            data.forEach(function(entry){
+                $scope.qm.push(entry.data_element.questionCategory.name);
+               var x = {
+                   question: entry.data_element.question,
+                   qid:entry.data_element.id,
+                   dataColumn:entry.data_element.dataColumn,
+                   options:entry.data_element.options,
+                   inputType:entry.data_element.inputType.id,
+                   required:entry.data_element.mandatory,
+                   qcategory:entry.data_element.questionCategory.name
+               } ;
+                $scope.formitems.push(x);
+            });
+            $scope.pm1 = [];
+            $http.get('/qcatlist').success(function(d){
+                d.forEach(function(k){
+                    $scope.pm.push(k);
+                });
+                $scope.pm.forEach(function(v){
+                    if($scope.qm.indexOf(v) > -1 ){
+//                        $scope.pm.splice($scope.pm.indexOf(v),1);
+                        $scope.pm1.push(v);
+                    }
+                })
+            });
+            console.log($scope.formitems);
+            $http.get('/caseworkers').success(function(data1){
+                $scope.userlist = data1;
+            });
+        });
+
+    }]);
+
+angular.module('cmlt')
+    .controller('viewClientFormCtrl', [ '$scope', '$http', '$window','$routeParams', function ($scope, $http, $window,$routeParams) {
+
+        $scope.menuStatus = false;
+
+        $scope.handleClick = function (id) {
+            alert(id);
+        };
+        console.log("-------");
+        $scope.check = [];
+        $scope.check['13'] = [];
+        $scope.checkstring = "";
+        $scope.checkboxtostr = function(idname,itr){
+            $scope.t = $scope.checkstring;
+            for(var t5 in $scope.check[13]){
+                $scope.checkstring = t5 + ",";
+            }
+            $scope.checkstring = $scope.t + $scope.checkstring;
+            $("#"+idname).val($scope.checkstring.slice(0, - 1));
+        }
+
+        $http.get('/sidebardata/'+$routeParams.clientId).success(function(data) {
+            $scope.menuItems = data;
+        });
+
+
+
+        $scope.clientId = $routeParams.clientId;
+
+        $scope.toggleMenu = function() {
+            $scope.menuStatus = !$scope.menuStatus;
+        }
+
+        $scope.$on('toggleMenu', function() {
+            $scope.toggleMenu();
+        });
+
+        $scope.$on('menuData', function(event, data) {
+            $scope.menuItems = data;
+        });
+
+//      View Client Form validate
+        $scope.formIfValid = function(formValid) {
+            $scope.pattssn = /\b(?!000)(?!666)(?!9)[0-9]{3}[ -]?(?!00)[0-9]{2}[ -]?(?!0000)[0-9]{4}\b/;
+            $scope.pattzip = /^\d{5}$/
+                if($scope.pattzip.test(validation.zip.value))
+            if($scope.pattssn.test(validation.ssn.value)) {
+                if (formValid)
+                    return false;
+            }
+            return true;
+        }
+
+        $http.get('/forms/'+$routeParams.formId).success(function(data) {
+            $http.get('/clients/'+$routeParams.clientId).success(function(dr) {
+                $scope.clientData = dr;
+
+
+            $scope.formitems = [];
+            $scope.formname = data[0].CForm.name;
+            $scope.pm=[];
+            $scope.qm=[];
+            $scope.defvalue = [];
+            data.forEach(function(entry){
+                $scope.check[entry.data_element.id] = [];
+                $scope.qm.push(entry.data_element.questionCategory.name);
+                if(entry.data_element.inputType.id == 5){
+
+                }
+                var x = {
+                    question: entry.data_element.question,
+                    qid:entry.data_element.id,
+                    dataColumn:entry.data_element.dataColumn,
+                    options:entry.data_element.options,
+                    inputType:entry.data_element.inputType.id,
+                    required:entry.data_element.mandatory,
+                    qcategory:entry.data_element.questionCategory.name
+                } ;
+                $scope.gt = [];
+                $scope.formitems.push(x);
+                if(entry.data_element.inputType.id == 1){
+                    $scope.gt = $scope.clientData[entry.data_element.dataColumn].split(",");
+                    $scope.gt.forEach(function(gt1){
+                        $scope.check[entry.data_element.id][gt1] = true;
+                        console.log("---");
+                        console.log($scope.check[entry.data_element.id]);
+                    });
+                    console.log($scope.check);
+                }
+            });
+            $scope.pm1 = [];
+            $http.get('/qcatlist').success(function(d){
+                d.forEach(function(k){
+                    $scope.pm.push(k);
+                });
+                $scope.pm.forEach(function(v){
+                    if($scope.qm.indexOf(v) > -1 ){
+//                        $scope.pm.splice($scope.pm.indexOf(v),1);
+                        $scope.pm1.push(v);
+                    }
+                })
+            });
+            console.log($scope.formitems);
+            $http.get('/caseworkers').success(function(data1){
+                $scope.userlist = data1;
+            });
+        });
+        });
+    }]);
+

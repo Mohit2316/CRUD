@@ -1,0 +1,58 @@
+<div>
+    <div class="custompanel6" ng-repeat="program in caseManagerPrograms | filter: isCorrect1" style="background: #ffffff; ">
+        <div class="inner-panel bg-white">
+            <div class="action_items">{{program.name}}</div>
+            <hr class="user_line3">
+            <div style="padding-left: 10px; padding-right:10px">
+                <p class="fc-medgray" style="font-size:12px">{{program.description}}</p>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="action_items">Program Details</div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="action_items">Eligiblity</div>
+                </div>
+            </div>
+            <hr class="user_line3">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div  style="padding-left:10px">
+                        <div class="user_text1">Program Start Date: </div><div class="user_text2">{{program.startDate}}</div><br>
+                        <div class="user_text1">Program End Date: </div><div class="user_text2">{{program.endDate}}</div><br>
+                        <div class="user_text1">Internal Agency Program </div><div class="user_text2">{{program.internal}}</div><br>
+                        <div class="user_text1">At Capacity: </div><div class="user_text2">{{program.atCapacity}}</div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div  style="padding-left:10px">
+                        <div class="user_text1">Required Documents: </div><div class="user_text2">{{program.eligibilityRequiredDocs}}</div><br>
+                        <div class="user_text1">Zip codes served: </div><div class="user_text2">{{program.zipCodeList}}</div><br>
+                        <div class="user_text1">Other Requirements: <br></div><div class="user_text2">{{program.eligibilityOther}}</div><br>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="action_items">Outcome Reporting Variables</div>
+                    <hr class="user_line3">
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div  style="padding-left:10px" ng-repeat="rv in repvariables">
+                        <div class="user_text2">{{rv}}</div><br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6"></div>
+                <a href="#"><div class="col-sm-3" style="text-align:right; padding-left: 0px; padding-right: 0px;"><div class="user_text1" style="color:#7EB9E5 ;font-size: 11px;">Edit Program Details</div></div></a>
+                <a id="over11" href="#"><div class="col-sm-2" style="text-align:right; padding-left: 0px; padding-right: 0px;"><div class="user_text1" style="color:#7EB9E5 ;font-size: 11px;">Close</div></div></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3"></div>
+</div>

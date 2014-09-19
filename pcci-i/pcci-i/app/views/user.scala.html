@@ -1,0 +1,287 @@
+@import views.html._;
+@(title: List[models.Purchase_Request],currentPage: Integer, pageCount: Integer ,loggedinUserRole:String,url:String)<!DOCTYPE html>
+@import helper._
+<html>
+<head>
+    <title>PCCI</title>
+    <!-- ****** faviconit.com favicons ****** -->
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="icon" sizes="16x16 32x32 64x64" href="/assets/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="196x196" href="/assets/images/favicon-196.png">
+    <link rel="icon" type="image/png" sizes="160x160" href="/assets/images/favicon-160.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/assets/images/favicon-96.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="/assets/images/favicon-64.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/favicon-152.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/assets/images/favicon-144.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/assets/images/favicon-120.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/images/favicon-114.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/images/favicon-76.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/images/favicon-72.png">
+    <link rel="apple-touch-icon" href="/assets/images/favicon-57.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta name="msapplication-TileImage" content="/assets/images/favicon-144.png">
+   
+    <!-- ****** faviconit.com favicons ****** -->
+
+    <link href='@routes.Assets.at("stylesheets/40_bootstrap_1024_1366_2048/css/bootstrap.css")' rel="stylesheet">
+    <link href='@routes.Assets.at("stylesheets/main.css")' rel="stylesheet">
+
+
+
+
+</head>
+<body>
+@main(loggedinUserRole,url)
+
+<div class="container" style="width:100vw;">
+    @if(loggedinUserRole=="normal" || loggedinUserRole=="approver"){
+
+    <div><a href="/create" class="btn btn-primary btn-lg" role="button"><i class="fa fa-plus-square fa-lg"></i> @Messages("create.new.request")</a></div>
+    <br/>
+    }
+
+    @pagination(currentPage, pageCount, 10 ,url.toInt)
+    <div class="form-group">
+        <label for="inputSearch" class="control-label col-xs-2" >@Messages("search.request.text")</label>
+
+        <div class="col-xs-4">
+            <input type="search" class="form-control" id="inputSearch"  placeholder='@Messages("searchbox.placeholder")'>
+
+
+        </div>
+
+            <a id="searchBtn"  class="btn btn-primary btn-default col-xs-1" role="button"><i class="fa fa-search fa-lg"></i>Search</a>
+
+            <a id="clearSearchBtn"  class="btn btn-primary btn-default col-xs-1.4" role="button"><i class="fa fa-search-minus fa-lg"></i>Clear Search</a>
+
+
+
+
+        </div>
+    @if(!title.isEmpty){
+
+    <br/>
+    <br/>
+
+    <table class="table table-bordered"  id="table">
+        <thead>
+        <tr >
+            <th>@Messages("table.request.number.text")</th>
+            <th>@Messages("table.project.number")</th>
+            <th>@Messages("table.project.name")</th>
+
+            <th>@Messages("table.approver.text")</th>
+
+            @if(loggedinUserRole!="normal"){
+            <th>@Messages("table.requester.text")</th>
+            }
+
+
+            <th>@Messages("table.request.status")</th>
+            <th>@Messages("table.created.at.text")<br/>
+                @Messages("table.updated.at.text")<br/>
+                @Messages("table.approved.at.text") <br/>
+                @Messages("table.processed.at.text") </th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+
+        @for(user <- title){
+
+        <tr>
+
+            <td><a href="/form/@user.key" id="@user.getPo_number">@user.getPo_number()</a>
+                @if(user.status==0){
+                <span class="label label-default">
+                }
+                @if(user.status==1 || user.status==2){
+                <span class="label label-success">
+                }
+                @if(user.status==3||user.status==4){
+                    <span class="label label-danger">
+
+                    }
+                    @user.getStatus</span><br/><br/>
+
+                @if(user.showUpdateButton(user.getKey,loggedinUserRole)==true){  <!--Not Submitted normal user-->
+                <a href="/update/@user.key" class="btn btn-primary btn-default" role="button"><i class="fa fa-pencil-square-o fa-lg"></i>@Messages("table.update.text")</a>
+                <!--button class="btn btn-default"><a href="/delete/@user.key">Delete</a></button-->
+
+                }
+                @if(user.showApproveButton(user.getKey,loggedinUserRole)){  <!--Not Submitted Approver-->
+                <a href="/form/@user.key" class="btn btn-primary btn-default" role="button">@Messages("table.approver.comment.text")</a>
+                }
+                @if(user.showDisApproveButton(user.getKey,loggedinUserRole) && !user.showApproveButton(user.getKey,loggedinUserRole)){
+                <a href="/form/@user.key" class="btn btn-danger btn-default" role="button">@Messages("table.approver.reject.text")</a>
+
+                }
+                @if(user.showProcessButton(user.getKey,loggedinUserRole)){   <!--Submitted financer-->
+               <a href="/form/@user.key" class="btn btn-primary btn-default" role="button">@Messages("table.financer.comment.text")</a>
+                }
+                @if(user.ifComment(user.getUserId())){   <!--Submitted financer-->
+                    <a href="/comment/@user.getKey()" class="btn btn-primary btn-default" role="button">@Messages("table.view.comments.text")</a>
+                }
+
+
+
+
+
+
+            </td>
+            <td>@user.cost_Center_Number</td>
+            <td>@user.cost_Center_Name</td>
+
+            <td> @user.getApprover</td>
+
+            @if(loggedinUserRole!="normal"){
+            <td>@user.user.name</td>
+            }
+            <td>@user.getStatus</td>
+             <td class="dateCol">   @user.getCreated_at<br/>
+                @user.getUpdated_at<br/>
+                @user.getApproved_at<br/>
+
+
+            <!--@if(user.status==0){-->
+            <!--<th>Not Approved Yet</th>-->
+            <!--}-->
+
+            @user.getProcessed_at</td>
+
+            <!--@if(user.status!=2){-->
+            <!--<th>Not Processed Yet</th>-->
+            <!--}-->
+
+        </tr>
+
+        }
+
+
+
+
+        </tbody>
+
+    </table>
+    <div id="emptyList" style="display: none">@Messages("empty.search.results")</div>
+    }
+    @if(title.isEmpty){
+    <br/><br/>
+    @if( loggedinUserRole=="financer"){
+    @if(url=="1"){
+    @Messages("search.request.noApprovedRequests")
+    }
+    @if(url=="2"){
+    @Messages("search.request.noProcessedRequests")
+
+    }
+    }
+    @if( loggedinUserRole=="approver" || loggedinUserRole=="normal"  ){
+    @if(url=="1"){
+    @Messages("search.request.noApprovedRequests") @Messages("search.request.additionalMessage")
+    }
+    @if(url=="2"){
+    @Messages("search.request.noProcessedRequests") @Messages("search.request.additionalMessage")
+
+    }
+    @if(url=="0" || url.isEmpty){
+    @Messages("search.request.noSubmittedRequests") @Messages("search.request.additionalMessage")
+    }
+    }
+
+
+
+
+
+    }
+
+
+
+</div>
+<script>
+
+
+
+
+
+
+    function filterTable(value) {
+        if (value != "") {
+            $("#table tr:not(:first)").each(function(){
+                $(this).find("td:first:contains-ci('" + value + "')").parent("tr").show();
+
+            });
+           if(!$("#table tr:not(:first):visible").length){
+               $("#emptyList").show();
+           }
+            else{
+               $("#emptyList").hide();
+
+           }
+
+
+
+//            $("#table td:contains-ci('" + value + "')").parent("tr").show();
+        }
+
+
+
+    }
+
+    // jQuery expression for case-insensitive filter
+    $.extend($.expr[":"], {
+        "contains-ci": function (elem, i, match, array) {
+
+            return (elem.textContent || elem.innerText || $(elem).text() || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+        }
+    });
+
+    // Event listener
+    $('#inputSearch').on('keyup', function () {
+        console.log('value is',$(this).val);
+        if(document.location.href.indexOf("?")==-1){
+            $("#searchBtn")[0].setAttribute("href",document.location.href+"?search="+$("#inputSearch").val());
+
+        }
+        else if((document.location.href.indexOf("?page")>=0 || document.location.href.indexOf("?search")>=0) && document.location.href.split("?").length==2){
+            $("#searchBtn")[0].setAttribute("href",document.location.href.replace(/\?(search|page)=[\w\W]*/ig,"")+"?search="+$("#inputSearch").val());
+
+
+        }
+
+
+        else{
+            $("#searchBtn")[0].setAttribute("href",document.location.href.replace(/[?&]*(search|page)=[^&]*/ig,"")+"&search="+$("#inputSearch").val());
+        }
+
+//        if ($(this).val() == '') {
+//            $("#table tbody > tr").show();
+//            $("#emptyList").hide();
+//        } else {
+//            $("#table > tbody > tr").hide();
+//            var filters = $(this).val().split(' ');
+//            filters.map(filterTable);
+//        }
+
+    });
+    $("#clearSearchBtn").on("click",function(){
+
+        $("#clearSearchBtn")[0].setAttribute("href",document.location.href.replace(/[?&]*(search)=[^&]*/ig,""));
+
+    });
+//    $("#searchBtn").click(function(){
+////        var linker = document.location.href;
+//        console.log("link is")
+////        var searchText =  $('#inputSearch').val();
+////        window.location = linker.indexOf("?")>=0?linker+"&search="+searchText;linker+"?search="+searchText;
+//        return false;
+//
+//    });
+
+</script>
+
+</body>
+</html>

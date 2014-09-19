@@ -1,0 +1,162 @@
+title=Pcci-i
+heading = Login With Your PCCI Credentials
+
+#login-form labels.
+email.text = Email:
+password.text = Password:
+forgot.password = Forgot Password ?
+submit.loginpage.text = Submit
+
+#forgot-password form labels
+email.forgot.text = Email:
+send.text = Send
+
+#reset-password labels
+headingReset= Password Reset
+headingForgot = Password Reset Request
+reset.text.heading = Please reset your password here
+reset.password.text = Password:
+reset.conform.text = Confirm Password:
+reset.text = Reset
+
+passwordResetText = Please enter the email associated with your PCCI account
+
+password=Password
+error.technical=Technical Error, please Retry
+
+invalid.user.or.password=Invalid user or password
+youve.been.logged.out=You have been logged out
+
+signin.signin=Sign In
+signin.your.email=Your email address
+signin.your.password=Your password
+
+
+token.invalid = Invalid token
+youre.not.registered = You are not registered!
+
+
+mail.subject = Notification for
+mail.subject.additional = request Application with PO Number:
+mail.header = Purchase request with PO Number
+mail.addedBy = was added by
+
+mail.subject.createnewform = Notification for creation of request Application with PO Number:
+mail.subject.updateform = Notification for changes in the request Application with PO Number:
+mail.subject.reupdateform = Notification for re-submission of request Application with PO Number:
+mail.subject.approver.approveform= Notification for approval of request Application with PO Number:
+mail.subject.approver.rejectform = Notification for rejection of request Application with PO Number:
+mail.subject.financer.processform = Notification for processing of request Application with PO Number:
+mail.subject.financer.rejectform = Notification for rejection of request Application with PO Number:
+mail.subject.approver.comment = Notification for addition of comment by approver on request Application with PO Number:
+mail.subject.financer.comment = Notification for addition of comment by financer on request Application with PO Number:
+
+#comment.html
+comment.empty = No comments for the Po Number
+
+#createpurchaseform.html
+purchase.create.header = Create Purchase Request
+purchase.update.header = Update Purchase Request
+
+#Errorpage.html
+error.message = Uhh Ohh.... Something Went Wrong
+
+#user.html
+search.request.additionalMessage = Please click the link above to create a new form.
+search.request.noApprovedRequests = No Approved Requests Available.
+search.request.noProcessedRequests = No Processed Requests Available.
+search.request.noSubmittedRequests = No Submitted Requests Available.
+search.request.text = Search Requests:
+searchbox.placeholder = Enter Request Number..
+
+
+#form labels.
+
+request.status= Request Status
+project.number = Cost Center or Project #
+project.name = Cost Center or Project Name
+account.category = Account Category
+requisition.type = Requisition Type
+requisition.options.first = Catalog
+requisition.options.second = Special
+requisition.options.third = Service
+asset.tag = Asset Tag
+asset.tag.option.first =No
+asset.tag.option.second = Yes
+cost.source.estimate = Cost Estimate and Source of Estimate if available
+attachments.text = Attachments
+request.delivery.date = Requested Delivery Date
+detailed.item.description = Detailed Item or Service Description
+quantity.text = Quantity
+vendor.name = Vendor Name
+approver.text = Approver:
+requester.text = Requester:
+po.number = PO # (to be completed by Office Manager)
+notes.text = Notes:
+submit.text = Submit
+resubmit.text = Re-Submit
+notes.placeholder = Make Notes Here....
+
+#navigation bar labels.
+
+home.text = Home
+submitted.text = Submitted
+approved.text = Approved
+processed.text = Processed
+sign.out.text = Sign Out!
+
+#view-form labels
+
+##search-related-labels
+create.new.request = Create New Purchase Request
+empty.search.results = No such request exists.
+
+
+##table-labels
+table.request.number.text = Request Number
+table.project.number = Cost Center or Project #
+table.project.name = Cost Center or Project Name
+table.approver.text = Approver
+table.requester.text = Requester
+table.request.status = Status
+table.created.at.text = Created At:
+table.updated.at.text = Last Updated At:
+table.approved.at.text = Approved At:
+table.processed.at.text = Processed At:
+table.update.text = Update
+table.approver.comment.text = Approve/Reject/Comment
+table.approver.reject.text = Reject
+table.financer.comment.text = Process/Reject/Comment
+table.view.comments.text = View Comments
+
+#view-form additional labels
+
+purchase.request.number = Purchase Request #
+file.attachment.text = File Attachment
+approver.comment.text = Comments
+approver.reject.text = Comments For Rejecting:
+approver.accept.text = Comments For Accepting:
+financer.comment.text = Comments
+financer.reject.text = Comments For Rejecting:
+financer.accept.text = Comments For Accepting:
+comments.placeholder = Enter Comment Here....
+
+financer.payment.text = Mode of Payment:
+financer.payment.option.first = CC
+financer.payment.option.second = Cheque
+financer.payment.option.third = lAWSON
+
+##button labels
+viewform.update.button.text = Update
+viewform.approver.accept.button.text = Accept
+viewform.approver.reject.button.text = Reject
+viewform.comment.button.text = Comment
+viewform.financer.accept.button.text = Process
+viewform.financer.reject.button.text = Reject
+
+#comments view labels
+comments.request.number = Request Number
+comments.comment.text = Comment
+comments.date.text = Date
+comments.createdby.text = Created By
+

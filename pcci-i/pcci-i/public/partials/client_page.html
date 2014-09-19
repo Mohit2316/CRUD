@@ -1,0 +1,723 @@
+<script>
+    $("#actionDiv").blur(function(){
+//        console.log('Blurred');
+       $("#actionItemForm").submit();
+    });
+</script>
+
+
+<div class="menu" ng-show="menuStatus" id="menuItem" >
+    <div ng-repeat="sectionItem in menuItems"  >
+        <div class="panel-group" id="accordion">
+            <div class="panel" style="background:inherit;">
+                <div class="menuitem menu-section-header">
+                    <div class="panel-title">
+                        <div class="menu-text-head" data-toggle="collapse" data-parent="#accordion" href="#accord{{$index}}">{{sectionItem.name}}<img src="/assets/images/down_arrow_icn.png" style="width:12px;height:12px;padding-left:6px"></div>
+                    </div>
+                </div>
+                <div id="accord{{$index}}" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div ng-show="sectionItem.name != 'Referral History'">
+                           <div class=" menuitem" ng-repeat="item in sectionItem.items" ><div ng-if="sectionItem.name!='Documents'"><a href="{{item.link}}" target="_self" class="menu-text1"><div >{{item.name}}</div></a></div><div ng-if="sectionItem.name=='Documents'"><div  class="menu-text1" tooltip-html-unsafe="{{item.name}}<br/>Created On:{{item.date}}" >{{item.name}}</div></div>
+                            <div ng-if="sectionItem.name=='Documents'" class="fc-vismedgray" style="padding-left:30px;font-size:12px;">Created on: {{item.date}}</div>
+                        </div>
+                            </div>
+                        </div>
+                        <div ng-show="sectionItem.name == 'Referral History'">
+                            <div ng-show="!isEmpty(sectionItem.items)">
+                                <div class="menuitem menu-text1" style="font-size: 13px;" ng-repeat="item in sectionItem.items" >
+                                    <b>{{item.item1name}}: {{item.item1}}</b>
+                                    <div>{{item.item2name}}: {{item.item2}}</div>
+                                    <div>{{item.item3name}}: {{item.item3}}</div>
+                                    <div>{{item.item4name}}: {{item.item4}}</div>
+                                </div>
+                            </div>
+                                <div class="menuitem menu-text1" style="font-size: 13px;" ng-show="isEmpty(sectionItem.items)">
+                                    <div>No Referral History</div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><br>
+    <a href="#" style="padding-left:10%;" class="user_text1 menuHeadingsSmall fc-litblue helv-bold">View Goals</a><br>
+    <a href="#" style="padding-left:10%;" class="user_text1 menuHeadingsSmall fc-litblue helv-bold">View iCCD</a>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-5 custompanel">
+<div class="user-box bg-white">
+<div class="user-head">
+    <div class="row">
+        <div class="col-sm-3">
+            <!--<img src='../assets/images/client_icon.png' class="img-responsive" alt="Responsive image" style="background:white;height:auto;width:auto;">-->
+            <img src='/getclientimage/{{client.id}}' class="img-responsive" alt="Responsive image" style="background:white;height:auto;width:auto;">
+
+        </div>
+        <div class="col-sm-9" style="padding-left: 0px;padding-top:0px;vertical-align: top">
+            <h1 class="fc-white" style="font-family:'HelveticaNeueCE-Thin',Helvetica !important; margin-top: 0;">
+                {{client.firstName}}
+            </h1>
+            <h1 class="fc-white" style="font-family:'HelveticaNeueCE-Thin',Helvetica !important;
+                            margin-top: 0; margin-bottom: 0;">
+                {{client.lastName}}
+            </h1>
+            <br>
+            <div class="fc-white"style="font-size: 12px; margin-top: 0;">
+                <b>Last Encounter:</b> {{client.dateLastEncounter | date}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="user_body">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="user_text1">
+                Active:
+            </div>
+            <div class="user_text2">
+                        <span ng-show="client.status">
+                            Y
+                        </span>
+                        <span ng-show="!client.status">
+                            N
+                        </span>
+            </div>
+            <br><br>
+            <div class="user_text1">Programs:</div>
+            <div class="user_text2"><ul style="list-style-type: none;padding-left:4vh;padding-top:1vh;"><li ng-repeat="program in programs" style="padding-bottom:1vh;">{{program}}<br></li></ul></div>
+
+            <div class="user_text1">ID#: </div><div class="user_text2">{{client.id}}</div>
+            <br>
+            <div class="user_text1">DOB: </div><div class="user_text2">{{client.dob | date}}</div>
+            <br><br>
+            <div class="user_text1">Address: <br></div>
+            <div class="user_text2">{{client.address1}}, {{client.address2}}<br>
+                {{client.city}}, {{client.state}} - {{client.zip}}
+            </div>
+            <br>
+            <div class="user_text1">Phone: </div>
+            <div class="user_text2">{{client.homePhone}}</div>
+            <br>
+            <div class="user_text1">E-mail: </div><div class="user_text2"><a href="mailto:{{client.email}}">{{client.email}}</a></div>
+            <br><br>
+            <div class="user_text1">Gender: </div>
+            <div class="user_text2">
+                        <span ng-show="client.gender == 'F'">
+                            Female
+                        </span>
+                        <span ng-show="client.gender == 'M'">
+                            Male
+                        </span>
+            </div>
+            <br>
+            <div class="user_text1">Ethnicity: </div><div class="user_text2">{{client.ethnicity}}</div>
+            <br>
+            <div class="user_text1">Race: </div><div class="user_text2">{{client.race}}</div>
+            <br><br>
+            <div class="user_text1">Record Updated: </div><div class="user_text2">{{client.lastUpdateDate}}</div>
+        </div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-5">
+            <div class="user_text1">IEP Consent: </div>
+            <div class="user_text2">
+                        <span ng-show="client.IEPconsent">
+                            Y
+                        </span>
+                        <span ng-show="!client.IEPconsent">
+                            N
+                        </span>
+            </div>
+            <br>
+            <div class="user_text1">HIPAA Waiver: </div>
+            <div class="user_text2">
+                    <span ng-show="client.HIPAAconsent">
+                        Y
+                    </span>
+                    <span ng-show="!client.HIPAAconsent">
+                        N
+                    </span>
+            </div>
+            <br><br>
+            <div class="user_text1">Head of Household: </div>
+            <div class="user_text2">
+                    <span>
+                       {{client.headOfHouseHold}}
+                    </span>
+
+            </div>
+            <br>
+            <div class="user_text1">Marital Status: </div><div class="user_text2">{{client.maritalStatus}}</div>
+            <br>
+            <div class="user_text1">Family Size: </div><div class="user_text2">{{client.familySize}}</div>
+            <br><br>
+            <div class="user_text1">Income: </div><div class="user_text2">${{client.totalIncome}}</div>
+            <br>
+            <div class="user_text1">% of Poverty Level: </div><div class="user_text2">{{client.percentPovertyLevel}}%</div>
+            <br><br>
+            <div class="user_text1">Housing Status: </div><div class="user_text2"></br>{{client.housingStatus}}</div>
+            <br>
+            <div class="user_text1">Transportation Status: </div><div class="user_text2">{{client.transportStatus}}</div>
+            <br><br>
+            <div class="user_text1">Social Status: </div><div class="user_text2">{{client.socialSupportStatus}}</div>
+            <br><br>
+            <a href="#" target="_self">
+                <div class="user_text1" style="color: #7EB9E5;"><a href="{{menuItems[0].items[0].link}}" target="_self">Edit Client Info</a></div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<hr class="user_line1">
+<div class= "user_footer">
+    <div class="row ">
+        <div class="col-sm-4">
+            <a href="#" data-toggle="modal" data-target="#myModal0" class="user_text1 menuHeadingsSmall fc-medblue helv-lightl">+ New Appointment</a>
+        </div>
+
+        <div class="col-sm-4">
+            <a  href="#" id="intRefBtn" data-toggle="modal" data-target="#myModal1" class="user_text1 menuHeadingsSmall fc-medblue helv-light" >+ Internal Referral</a>
+        </div>
+
+
+
+
+
+        <div class="col-sm-4">
+            <a href="#"><div class="user_text1 menuHeadingsSmall fc-medblue helv-light">+ External Referral</div></a>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+
+
+<div class="col-sm-7">
+<div class="custompanel2">
+    <form method="POST" action="actionItemForm" name="formNewActItem" id="actionItemForm">
+    <div class="action_items_outerbox bg-white">
+        <div class="action_items" style="padding-left:20px;">Action Items:</div>
+        <input type="hidden" name="client.id" value="{{client.id}}"/>
+
+        <div class="custompanel4" style="padding-left:20px;">
+            <!--input type="hidden" name="comment.id" value="{{content}}"/-->
+            <textarea class="form-control bg-notebggray text-area-font" rows="6" id="actionDiv"  style="left:12px;resize:none;" name="comment.id" >{{comment}}</textarea>
+        </div>
+    </div>
+        </form>
+</div>
+
+<br>
+<div class="custompanel3">
+<div class="inner-panel bg-white">
+<div class="filters">
+
+            <span class="fc-medblue helv-bold" style=
+                    "font-size:32;font-weight:bold;display: inline;">Filter by:</span>
+    &#160;
+
+
+        <!--<select ng-model="filterModel.case_worker" ng-options="worker.name for worker in case_workers" class="selectpicker  ng-pristine ng-valid" title="Case Manager:" style="display: none;">-->
+            <!---->
+            <!---->
+        <!--</select>-->
+        <!--<div class="btn-group bootstrap-select ng-pristine ng-valid">-->
+            <!--<button type="button" style="border-radius:19px;" class="btn dropdown-toggle selectpicker btn-default" data-toggle="dropdown" title="Jennifer">-->
+                <!--<span class="filter-option pull-left">CASE MANAGER</span>-->
+            <!--</button>-->
+
+        <!--</div>-->
+    <div class="btn-group">
+        <button class="btn dropdown-toggle" >Case Manager</button>
+
+
+
+    </div>
+    <div class="btn-group">
+        <button class="btn dropdown-toggle" >Program</button>
+
+
+
+    </div>
+
+
+
+
+
+    <div class="calDisplay" style="padding-top:0px !important;">
+        <div class="btn-group">
+            <button class="btn dropdown-toggle ng-binding ng-pristine ng-valid" ng-model="fromDate" data-max-date="&quot;2014-07-09T05:11:24.159Z&quot;" data-autoclose="true" bs-datepicker="" value="6/9/14">From: 06/09/2014
+            </button>
+
+        </div>
+        <div class="btn-group">
+            <button class="btn dropdown-toggle ng-binding ng-pristine ng-valid" ng-model="untilDate" data-min-date="&quot;2014-06-09T05:11:24.159Z&quot;" data-autoclose="true" bs-datepicker="" value="7/9/14">To: 07/09/2014
+            </button>
+
+        </div>
+
+    </div>
+    <br><br>
+
+    <div class="search">
+
+        <input type="text" class="search-input" ng-model="searchText"/>
+        <span id="clear_input" ng-click="clearInput()"></span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-9">
+        <div class="Heading encounter_head fc-darkblue helv-light" style="font-size:18px;">
+            Encounters
+        </div>
+    </div>
+
+    <div class="col-sm-3 Heading encounter_head fc-litblue helv-light" style="text-align: center;font-size:12px;line-height: 25px">
+        <!--<div class="Heading encounter_head fc-litblue helv-light" style=
+        "font-size:11px;line-height: 25px"></div>-->
+        <button id="newNote" class="newEncounterCancelButton button-encounters" value='Show Layer' onclick="setVisibility('sub3', 'inline');">+New Note</button>
+
+
+    </div>
+</div>
+<hr class="user_line2">
+<div class="newform_box">
+    <div class="row" id="sub3">
+        <div class="col-sm-12">
+            <div class="custompanel5">
+                <div class="new_form_outerbox bg-white">
+
+
+                    <form method="POST" action="newEncounterForm" name="formNewEncounter" id="newEncounterForm" >
+                        <div class="row" style="width: 100% !important">
+                            <div class="col-sm-4">
+                                <input type="hidden" name="client.id" value={{client.id}} />
+                                <div class="helv-bold fc-darkblue" style="font-size: 12px;padding: 0 0 12px 12px; display:inline-block;">
+                                    {{date | date:'MM/dd/yyyy'}}
+                                    <input type="hidden" name="encounterDate.serialVersionUID" value={{date}} />
+                                </div>
+                                <div class="fc-darkgray" style="font-size: 12px;padding: 0 0 11px 0;display:inline-block;">
+                                    by {{userName.name}}
+                                    <input type="hidden" name="case_manager.id" value={{userName.id}} />
+                                    <input type="hidden" name="user.id" value={{userName.id}} />
+                                    <input type="hidden" name="org.id" value="1" />
+                                </div>
+                            </div>
+                            <div class="col-sm-2" style="text-align:right;padding-right:5px;" >
+                                <div class="fc-darkgray" style="font-size: 12px;padding: 0 0 11px 0;display:inline-block;"><b>Measure:</b></div>
+                            </div>
+                            <div class="col-sm-2"  style="padding-left: 0px;">
+                                <input type="text" class="bg-notebggray rounddiv3 text-area-font" name="measurementValue"  value="15 min">
+                            </div>
+                            <div class="col-sm-2" style="text-align: right">
+
+                                <div class="btn-group">
+                                    
+
+
+                                    <select class="form-control rounddiv2  bg-medblue fc-white" name="program.id" ng-model="programFilter.id">
+
+                                        <option ng-repeat="program in caseManagerPrograms" value={{program.id}} ng-selected="program.id==programFilter.id">
+
+
+                                            <div class="btn-group bootstrap-select">
+                                                <button type="button" style="border-radius:19px" class="btn dropdown-toggle selectpicker btn-default" title="Hello">
+                                                <span class="filter-option pull-left"> {{program.name}}</span>
+                                                </button>
+                                            </div>
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2" style="text-align: right">
+                                <div class="btn-group" ng-show="!open">
+
+
+                                    <select class="form-control rounddiv2  bg-medblue fc-white" name="service.id" >
+                                        <option ng-repeat="service in services" value={{service.id}} >
+
+
+                                            <div class="btn-group bootstrap-select">
+                                                <button type="button" style="border-radius:19px" class="btn dropdown-toggle selectpicker btn-default" title="Hello">
+                                                    <span class="filter-option"> {{service.name}}</span>
+                                                </button>
+                                            </div>
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="clearfix visible-sm visible-md visible-xs"></div>
+                        </div>
+                        <textarea class="form-control bg-notebggray text-area-font" rows="8" placeholder="Enter note text here. " style="left: 12px ;resize:none" name="note" required></textarea>
+                        <div class="row" style="width:100% !important">
+                            <div class="col-sm-10" ></div>
+                            <div class="col-sm-1">
+                                <button class="newEncounterButton button-encounters" ng-click="ok()" type="submit" value="Submit">Save</button></div>
+                            <div class="col-sm-1">
+                                <input class="newEncounterCancelButton button-encounters" name=type value='Cancel' onclick="setVisibility('sub3', 'none');" style="cursor:pointer; outline: none;"/>
+                            </div></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div  ng-repeat="encounter in encounters | orderBy:'encounter.id':true|filter: searchText">
+        <div class="listItemDivider" style="margin:5px 5px"></div>
+        <div class=row>
+            <div class="col-sm-1" style=" width:5.333%;padding-right:0px;"><button type="button" class="helv-bold fc-darkblue button-encounters" style="font-size: 12px;padding: 0 0 0 12px !important; display:inline;">-</button></div>
+            <div class="col-sm-4" style="padding-left: 0">
+                <div class="helv-bold fc-darkblue" style="font-size: 12px; display:inline-block;">
+                    {{encounter.encounter.encounterDate.monthOfYear}}/{{encounter.encounter.encounterDate.dayOfMonth}}/{{encounter.encounter.encounterDate.yearOfEra}}
+                </div>
+                <div class="fc-darkgray" style="font-size: 12px;display:inline-block;">by {{encounter.encounter.case_manager.name}}
+                </div>
+            </div>
+
+            <div class="col-sm-2">
+                <div class="fc-darkgray helv-bold" style="font-size: 12px;display:inline-block;" >
+                    15 min.
+                </div>
+            </div>
+
+
+
+            <div class="col-sm-5" style="text-align:right;">
+                <div class="fc-darkgray helv-bold" style="font-size: 12px;text-align: right;display:inline-block;">
+                    {{encounter.encounter.program.name}},  {{encounter.encounter.service.name}}
+                </div>
+            </div>
+
+        </div>
+
+        <div class=row>
+            <div class="col-sm-1" style="padding-right: 0px; width:6.333%"><div class="helv-bold fc-medblue" style="font-size: 12px;padding: 0 0 0 12px; display:inline-block;">&nbsp;</div></div>
+            <div class="col-sm-11" style="padding-left: 0">
+                <p class="fc-darkgray" style="font-size:12px;">{{encounter.encounter.note}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5"></div>
+            <div class="col-sm-2" style="text-align: right;padding-right:12px">
+                <button id="newComment" class="newCommentCancelButton button-encounters"
+                        value='Show Layer'
+                        ng-click="setVisibilityComment(encounter.encounter.id, 'inline');">
+                    <div ng-show="userName.role.name =='ProgramManager'">
+                        Comment
+                    </div>
+                </button>
+            </div>
+            <div class="col-sm-1" style="text-align: right;padding-right:12px">
+                <button class=" button-encounters" value='Show Layer'>
+                    Print
+                </button>
+            </div>
+            <div class="col-sm-1" style="text-align: right;padding-right:12px">
+                <button class=" button-encounters" value='Show Layer'>
+                    Email
+                </button>
+            </div>
+            <div class="col-sm-1" style="text-align: right;padding-right:12px">
+                <button class=" button-encounters" value='Show Layer'>
+                    SMS
+                </button>
+            </div>
+            <div class="col-sm-1" style="text-align: right;padding-right:12px">
+                <button class=" button-encounters" value='Show Layer' id="/{{encounter.encounter.id}}" onclick="deleteEncounter(this);" >
+                    Delete
+                </button>
+
+            </div>
+        </div>
+
+        <div class="row newCommentOriginalState" id="{{encounter.encounter.id}}">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-11 fc-darkgray">
+                <b style="font-size: 12px">
+                    Unsaved Comment:
+                </b>
+                <form method="POST" action="newCommentForm" name="formNewComment" id="newCommentForm">
+                    <textarea class="form-control bg-notebggray text-area-font" rows="6" style="resize:none;"name="comment" placeholder="Type Comment text here." required></textarea>
+                    <input type="hidden" name="user.id" value={{userName.id}} />
+
+                    <input type="hidden" name="encounter.id" value={{encounter.encounter.id}} />
+                    <input type="hidden" name="commentDate.serialVersionUID" value=commentDate.serialVersionUID />
+                    <div class="row">
+                        <div class="col-sm-9"></div>
+                        <div class="col-sm-1">
+                            <button class="newCommentButton button-encounters" ng-click="ok()" type="submit" value="Submit">
+                                Save
+                            </button>
+                        </div>
+                        <a href="#">
+                            <div class="col-sm-1">
+                                <input class="newCommentCancelButton button-encounters" name=type value='Cancel'
+                                       ng-click="setVisibilityComment(encounter.encounter.id, 'none');"  style="cursor:pointer; outline: none;"/>
+                            </div>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row" ng-show="!isEmpty(encounter.comments)">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-11 fc-darkgray">
+                <b style="font-size: 12px; display:block">Comments:</b>
+            </div>
+        </div>
+        <div class="row" ng-show="!isEmpty(encounter.comments)">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-11">
+                <div style="padding-left: 12px" ng-repeat="comment in encounter.comments  | orderBy:'id':true">
+                    <div class="helv-bold fc-darkblue" style="font-size: 12px; display:inline-block;">{{comment.commentDate.monthOfYear}}/{{comment.commentDate.dayOfMonth}}/{{comment.commentDate.yearOfEra}}
+                    </div>
+                    <div class="fc-darkgray" style="font-size: 12px;display:inline-block;">by {{comment.user.name}}
+                    </div>
+                    <p class="fc-darkgray" style="font-size:12px">{{comment.comment}}</p>
+                    <!--<div class="listItemDivider"></div>-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+
+    <div id="newAppointment">
+        <div class="mymodal" ng-controller="ModalDemoCtrl">
+
+            <!-- Modal -->
+           <div class="modal fade" id="myModal0" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="model-content" style="width: 33vw;">
+                        <div>
+                                <div class="inner-panel bg-white">
+
+                                    <form method="POST" action="makeAppointmentForm" ng-submit="ok()" name="form1">
+                                        <div class="modal-body">
+                                            <div class="fc-darkblue helv-light panelHeader">
+                                                New Appointment
+                                            </div> <!-- div new appointment header-->
+
+                                            <div class="Table" ng-app="cmlt" ng-controller="ClientPageCtrl">
+                                                <div class="Row">
+                                                    <div class="Cell2 ">
+                                                        <strong>Client:</strong>
+                                                    </div><!-- div class Cell2 -->
+                                                    <div class="Cell2 ">{{client.firstName}} {{client.lastName}}</div><!-- div class Cell2 -->
+                                                    <input type="hidden" name="client" value="{{client.id}}" />
+                                                    <input type="hidden" name="appointmentDate.serialVersionUID" id="appointmentDate" value="" />
+                                                    <!--serialVersionUID -->
+                                                </div><!-- div class row -->
+                                                <input type="hidden" name="org.id" value="1" />
+                                                <div class="Row">
+                                                            <span class="Cell2  fc-darkblue helv-light modal-window-sub-headings" >
+                                                                <strong>Program: </strong>
+                                                            </span>
+                                                    <div>
+                                                        <select ng-model="selection"
+                                                                ng-options="unique.ProgramId as unique.ProgramName for unique in caseWorkerProgram | unique:'ProgramName'"
+                                                                    class=" Cell2 form-control rounddiv  bg-medblue fc-white" style="width: 100%;" required>
+                                                            <option style="display:none" value="" disabled="disabled"><i>Select Program</i></option>
+                                                        </select>
+                                                    </div>
+                                                </div><!-- div class row -->
+                                                <div class="Row">
+                                                    <div class=" Cell2  fc-darkblue helv-light modal-window-sub-headings"style="width: 30%">
+                                                        <strong>Case Manager:</strong>
+                                                    </div>
+                                                    <div >
+                                                        <select name="case_manager" class="Cell2 form-control rounddiv  bg-medblue fc-white "style="width: 100%;">
+                                                            <option  value="" ><i>Select Case Manager</i></option>
+                                                            <option ng-repeat="unique in caseWorkerProgram | filter: dynamicCaseworkerList" value="{{unique.CaseworkerId}}" selected="selected">
+                                                                {{unique.CaseworkerName}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div><!-- div class row -->
+
+                                                <div class="Row">
+                                                    <div class=" Cell2  fc-darkblue helv-light modal-window-sub-headings" style="width: 30%">
+                                                        <strong>Time:</strong>
+                                                    </div>
+                                                    <div class="Cell2">
+
+                                                        <div class="btn-group">
+                                                            <button type="button" id="dateSelected" name="date1" class="btn rounddiv dropdown-toggle" ng-model="fromDate"  data-min-date="{{date}}" data-autoclose = true bs-datepicker style="height:2.6vw; width: 8vw; font-size: 0.875em">{{(fromDate.getMonth()<9?('0'+(fromDate.getMonth()+1)):fromDate.getMonth()+1) + '/' + (fromDate.getDate()<10?'0' + fromDate.getDate(): fromDate.getDate()) +'/' + fromDate.getFullYear()}}
+                                                                <span class="caret" onchange="document.getElementById('date1').value = this.value"></span></button>
+                                                        </div>
+                                                        <input type="hidden" id="date1" name="date1" value="01/01/2014">
+
+                                                        <select id="timeSelected" name="time1" class="Cell2 form-control rounddiv  bg-medblue fc-white" style="height:2.6vw;width:8vw;">
+                                                            <option value="01:00">01:00</option>
+                                                            <option value="02:00">02:00</option>
+                                                            <option value="03:00">03:00</option>
+                                                            <option value="04:00">04:00</option>
+                                                            <option value="05:00">05:00</option>
+                                                            <option value="06:00">06:00</option>
+                                                            <option value="07:00">07:00</option>
+                                                            <option value="08:00">08:00</option>
+                                                            <option value="09:00">09:00</option>
+                                                            <option value="10:00">10:00</option>
+                                                            <option value="11:00">11:00</option>
+                                                            <option value="12:00">12:00</option>
+                                                            <option value="13:00">13:00</option>
+                                                            <option value="14:00">14:00</option>
+                                                            <option value="15:00">15:00</option>
+                                                            <option value="16:00">16:00</option>
+                                                            <option value="17:00">17:00</option>
+                                                            <option value="18:00">18:00</option>
+                                                            <option value="19:00">19:00</option>
+                                                            <option value="20:00">20:00</option>
+                                                            <option value="21:00">21:00</option>
+                                                            <option value="22:00">22:00</option>
+                                                            <option value="23:00">23:00</option>
+                                                        </select>
+
+                                                    </div>
+
+                                                </div><!-- div class row -->
+
+                                                <div class="Row">
+                                                    <div class=" Cell2  fc-darkblue helv-light modal-window-sub-headings" style="width: 30%">
+                                                        <strong>Location:</strong>
+                                                    </div>
+                                                    <div>
+                                                        <input type="text" class=" Cell2 form-control rounddiv"
+                                                               placeholder="Enter the location" style="background:#ededed;width:100%;">
+                                                    </div>
+                                                </div><!-- div class row -->
+
+                                                <div class=" Cell2 helv-light modal-window-sub-headings" style="width: 30%">Comments: </div><br>
+                                                <div class=" helv-light" style="width: 100%" >
+                                                    <textarea class="form-control" rows="6" placeholder="Enter Note Text Here"
+                                                              style="background:#ededed;" name="comment"></textarea>
+                                                </div><!-- div with textarea-->
+
+                                            </div><!-- div class Table -->
+                                            <div class="modal-foo" align="right">
+                                                <button class="btn btn-primary btn1 fc-litblue helv-bold " ng-click="ok()" type="submit" ng-disabled="validReferral(form1.$valid)">Make Appointment</button>&nbsp; &nbsp;
+                                                <button type="button" class="btn btn-warning btn1 fc-litblue helv-bold" data-dismiss="modal">Cancel</button>&nbsp;&nbsp;&nbsp;
+                                            </div>
+
+
+                                        </div><!-- div class modal-body-->
+                                    </form>
+
+
+                                </div><!-- div class inner-panel-->
+                            <!--div class custompanel6-->
+                        </div>
+                    </div><!-- end div class modal-content-->
+                </div><!-- end div class modal-dialog-->
+            </div><!-- end div class modal fade , id myModal0-->
+        </div><!-- end div class mymodal -->
+    </div><!-- end div class newApointment -->
+
+</div></div>
+
+
+<div id="makereferral">
+    <div class="mymodal1" ng-controller="ModalDemoCtrl">
+        <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="model-content" style="width: 37vw;">
+                    <div>
+                        <div class="custompanel6"  style="background: #ffffff; border-radius: 0.625em">
+                            <div class="inner-panel bg-white">
+                                <form method="POST" action="makeReferralForm" name="form1">
+                                    <div class="modal-body">
+                                        <div class=" fc-darkblue helv-light" style="font-size:1.674em;padding:12px 5px">Internal Referral</div>
+
+
+                                        <div class="Table" ng-app="cmlt" ng-controller="ClientPageCtrl">
+
+                                            <div class="Row" style="height:2em">
+                                                <div class="Cell2 modal-window-sub-headings helv-bold fc-darkgray">Client:</div>
+                                                <div class="Cell2 modal-window-sub-headings fc-darkgray ">{{client.firstName}} {{client.lastName}}</div>
+                                                <input type="hidden" value={{client.id}} name="client">
+                                                <input type="hidden" value="1" name="org.id">
+                                                <input type="hidden" name="referralDate.serialVersionUID" value="" />
+                                            </div>
+
+                                            <div class="Row" style="height:2em">
+
+                                                <span class=" Cell2 modal-window-sub-headings fc-darkblue helv-bold" style="width: 40%">Referring Program:</span>
+                                                <div>
+                                                    <div class="Cell2 modal-window-sub-headings fc-darkgray ">{{referProgram}}</div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="Row" style="height:2em">
+
+                                                <span class=" Cell2 modal-window-sub-headings fc-darkblue helv-bold" style="width: 40%">Program: </span>
+                                                <div ng-hide="programNumber()">
+                                                    <select ng-model="selectionReferral" ng-change="generateProgName()" id="progName"
+                                                            ng-options="unique.ProgramId as unique.ProgramName for unique in caseWorkerProgram | unique:'ProgramName' | filter:checkProgramList"
+                                                            class=" Cell2 form-control rounddiv  bg-medblue fc-white" style="width: 100%;" id="referralProgramSelect" required>
+                                                        <option style="display:none" value="" disabled>
+                                                            <i>Select Program</i>
+                                                        </option>
+                                                    </select>
+                                                    <input type="hidden" name="prog" id="prog" value="">
+                                                </div>
+                                                <div ng-show="programNumber()">
+                                                    <div class="Cell2 modal-window-sub-headings fc-darkgray"><i>No Programs to Refer</i></div>
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="Row" style="height:2em">
+
+                                                <div class=" Cell2 modal-window-sub-headings fc-darkblue helv-bold"style="width: 40%">Case Manager: </div>
+                                                <div ng-hide="programNumber()">
+                                                    <select name="case_manager" class="Cell2 form-control rounddiv  bg-medblue fc-white "style="width: 100%;">
+                                                        <option style="display:none" value="" disabled><i>Select Case Manager</i></option>
+                                                        <option ng-repeat="unique in caseWorkerProgram | filter: dynamicCaseworkerList" value="{{unique.CaseworkerId}}" selected="selected">
+                                                            {{unique.CaseworkerName}}
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div ng-show="programNumber()">
+                                                    <div class="Cell2 modal-window-sub-headings fc-darkgray"></div>
+                                                </div>
+                                            </div>
+
+                                        </div> <!-- end of table -->
+
+                                        <div class="Cell2 modal-window-sub-headings fc-darkblue helv-bold"  style="height:2em"> Eligibility: </div>
+                                        <div class="modal-window-sub-headings" style="padding-left:5px"><b>Required Documents:</b><span id="reqDocs" style="color:#a9a9a9; padding-left:12px"></span></div>
+                                        <div><br></div>
+                                        <div class="modal-window-sub-headings" style="padding-left:5px"><b>Zip Codes Served:</b><span id="zipCodes" style="color:#a9a9a9; padding-left:12px"></span></div>
+                                        <div class="modal-window-sub-headings" style="padding-left:5px"><b>Other Requirements:</b></div>
+                                        <div class="modal-window-sub-headings" style="padding-left:5px"><span id="otherReqs" style="color:#a9a9a9"></span></div>
+                                        <div class="helv-bold modal-window-sub-headings" style="padding-left:5px;padding-top:5px;color:#000">Comments: </div>
+                                        <textarea class="form-control" rows="2" placeholder="Enter Note Text Here" style="background:#ededed;width:100%;color:#a9a9a9 "></textarea>
+                                        <div class="modal-foo" align="right">
+                                            <button class="btn btn-primary btn1 fc-litblue helv-bold " ng-click="ok()" type="submit" ng-disabled="!(!programNumber()&& !validReferral(form1.$valid))">Make Referral</button>&nbsp; &nbsp;
+                                            <button type="button" class="btn btn-warning btn1 fc-litblue helv-bold" data-dismiss="modal">Cancel</button>&nbsp;&nbsp;&nbsp;
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div></div>
+
+
+    </div>
+
+
+</div>

@@ -1,0 +1,45 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+
+
+
+POST        /login                        controllers.Application.authenticate()
+POST        /forgotPasswordRequest        controllers.Application.authenticateEmail()
+POST        /resetPasswordCheck           controllers.Application.authenticatePass()
+GET         /forgotpassword               controllers.Application.forgotPassword()
+GET         /resetPassword                controllers.Application.resetPasswordForm()
+GET         /logout                       controllers.Application.logout()
+
+
+POST        /create                       controllers.PurchaseRequestController.newRequest()
+POST        /updatedForms                 controllers.PurchaseRequestController.authenticateUpdate()
+GET         /create                       controllers.PurchaseRequestController.create()
+GET         /home                         controllers.PurchaseRequestController.all()
+#GET           /financer/reject/:id                        controllers.PurchaseRequestController.rejectByFinancer(id:Long)
+POST        /approver/comment             controllers.PurchaseRequestController.approverComment()
+POST        /financer/comment             controllers.PurchaseRequestController.Commentfinancer()
+
+POST        /approver/reject              controllers.PurchaseRequestController.approverReject()
+POST        /approver/accept              controllers.PurchaseRequestController.approverAccept()
+POST        /financer/accept              controllers.PurchaseRequestController.financerAccept()
+POST        /financer/reject              controllers.PurchaseRequestController.financerReject()
+GET         /approver/reject/:id          controllers.PurchaseRequestController.rejectByApprover(id:Long)
+GET         /form/:id                     controllers.PurchaseRequestController.read(id:Long)
+#GET           /process/:id                                controllers.PurchaseRequestController.process(id:Long)
+GET         /approve/:id                  controllers.PurchaseRequestController.approve(id:Long)
+GET         /delete/:id                   controllers.PurchaseRequestController.delete(id:Long)
+GET         /update/:id                   controllers.PurchaseRequestController.update(id:Long)
+#PUT           /updateForms                               controllers.PurchaseRequestController.authenticateUpdate()
+
+GET         /comment/:id                  controllers.PurchaseRequestController.comments(id:Long)
+
+
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file                 controllers.Assets.at(path="/public", file)
+
+#Launching Page
+GET         /                             controllers.Application.index()
+

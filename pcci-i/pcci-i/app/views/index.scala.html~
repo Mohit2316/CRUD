@@ -1,0 +1,225 @@
+@(title: String)(name: String)(organization: String)(a: Integer)<!DOCTYPE html>
+<html>
+<head>
+    <title>@title</title>
+    <link href='@routes.Assets.at("stylesheets/kendo.common.min.css")' rel="stylesheet" />
+    <link href='@routes.Assets.at("stylesheets/kendo.default.min.css")' rel="stylesheet" />
+    <link href='@routes.Assets.at("stylesheets/kendo.dataviz.min.css")' rel="stylesheet" />
+    <link href='@routes.Assets.at("stylesheets/kendo.dataviz.default.min.css")' rel="stylesheet" />
+    <link href='@routes.Assets.at("stylesheets/kendo.default.mobile.min.css")' rel="stylesheet" />
+    <script src='@routes.Assets.at("javascripts/jquery.min.js")'></script>
+
+
+
+
+    <script src='@routes.Assets.at("javascripts/kendo.all.min.js")'></script>
+    <script src='@routes.Assets.at("javascripts/angular.js")'></script>
+    <script src='@routes.Assets.at("javascripts/angular-sanitize.js")'></script>
+    <script src='@routes.Assets.at("javascripts/angular-animate.js")'></script>
+    <script src='@routes.Assets.at("javascripts/angular-cookies.js")'></script>
+    <script src='@routes.Assets.at("javascripts/angular-route.js")'></script>
+    <script src='@routes.Assets.at("javascripts/angular-resource.js")'></script>
+    <script src='@routes.Assets.at("javascripts/angular-kendo.min.js")'></script>
+
+
+    <script src='@routes.Assets.at("javascripts/formbuilder/angular-form-builder.js")'></script>
+    <script src='@routes.Assets.at("javascripts/formbuilder/angular-form-builder-components.js")'></script>
+
+    <script src='@routes.Assets.at("javascripts/formbuilder/angular-validator.js")'></script>
+    <script src='@routes.Assets.at("javascripts/formbuilder/angular-validator-rules.js")'></script>
+    <script src="/assets/javascripts/ui-bootstrap-tpls-0.11.0.min.js"></script>
+    <script src='@routes.Assets.at("javascripts/app.js")'></script>
+    <script src='@routes.Assets.at("javascripts/formbuilder/demo.js")'></script>
+    <script src='@routes.Assets.at("javascripts/cwmain.js")'></script>
+    <script src='@routes.Assets.at("javascripts/pm.js")'></script>
+    <script src='@routes.Assets.at("javascripts/clientctrl.js")'></script>
+    <script src='@routes.Assets.at("javascripts/jquery-ui.js")'></script>
+
+
+    <!--<script src="//code.jquery.com/jquery-1.10.2.js"></script>-->
+
+    <link href='@routes.Assets.at("stylesheets/angular-form-builder.css")' rel="stylesheet">
+
+    @*<script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>*@
+    <link rel="stylesheet" href="/assets/stylesheets/datePicker/angular-motion.min.css">
+    <link rel="stylesheet" href="/assets/stylesheets/datePicker/bootstrap-additions.min.css">
+    <link rel="stylesheet" href="/assets/stylesheets/datePicker/libraries.min.css">
+    <link rel="stylesheet" href="/assets/stylesheets/datePicker/main.min.css">
+
+    <script src="/assets/javascripts/angular-strap.js" data-semver="v2.0.3"></script>
+    <script src="/assets/javascripts/angular-strap.tpl.js" data-semver="v2.0.3"></script>
+
+
+
+    <script type="text/javascript" src="/assets/javascripts/bootstrap-select.js"></script>
+    <link rel="stylesheet" type="text/css" href="/assets/stylesheets/bootstrap-select.css">
+    <script src='@routes.Assets.at("javascripts/angular-bootstrap-select.js")'></script>
+    <script src='@routes.Assets.at("javascripts/lodash.js")'></script>
+    <link href='@routes.Assets.at("stylesheets/40_bootstrap_1024_1366_2048/css/bootstrap.css")' rel="stylesheet">
+
+    <link href='@routes.Assets.at("stylesheets/pm.css")' rel="stylesheet">
+    <link href="/assets/stylesheets/v2/bootstrap.min.css" rel="stylesheet">
+    <link href='@routes.Assets.at("stylesheets/main.css")' rel="stylesheet">
+    <script src="/assets/javascripts/v2/bootstrap.min.js"></script>
+
+    <script src="/assets/javascripts/viewport-units-buggyfill.js"></script>
+    <script>window.viewportUnitsBuggyfill.init();</script>
+
+    @*<script src='@routes.Assets.at("javascripts/jquery-ui.min.js")'></script>*@
+    @*<script src='@routes.Assets.at("javascripts/jquery.ui.touch-punch.min.js")'></script>*@
+
+    <style>
+
+
+        .login-buttons {
+        <!-- padding-top:35%; -->
+        }
+
+
+        .loginbutton {
+            width:80px;
+            color: #7EB9E5;
+            /*font-size:30px;*/
+            font-weight:bold;
+            margin: 0 auto;
+        }
+
+        .leftdiv {
+            width:100%;
+        }
+
+        .relative1 {
+            position: absolute;
+            top: 70%;
+            left: 28%;
+        }
+
+        .relative3 {
+            position: absolute;
+            top: 70%;
+            left: 56%;
+        }
+
+        .relative2 {
+            position: absolute;
+            top: 80%;
+            left: 47%;
+        }
+
+        .menu {
+            width:27%;
+            position: absolute;
+            right:0;
+            border-bottom-left-radius: 10px;
+            border-top-left-radius: 10px;
+            background-color: rgba(255,255,255,.92);
+            top: 45px;
+            max-height:88vh;
+            overflow-y: scroll;
+            z-index: 200;
+            padding-top:10px;
+        }
+
+        .menuitem {
+            width:93%;
+            float:right;
+            padding:3px 5px 3px 15px;
+            line-height: 20px;
+            font-size: 20px;
+
+        }
+        .menu-section-header{
+            height:25px;
+            background-color: #0977B0 !important;
+            border-bottom-left-radius: 15px;
+            border-top-left-radius: 15px;
+            margin:0px 0 10px 10px;
+
+        }
+        .menu-text-head{
+            color: #fff;
+            font-size: 15px;
+            font-family: 'HelveticaNeueLT-W1G-55-Roman',Helvetica !important;
+        }
+        .menu-text1{
+            color: #A2A9AA !important;
+            font-color:#476567 !important;
+            font-size: 14px;
+            font-family: 'HelveticaNeueLT-W1G-55-Roman',Helvetica !important;
+        }
+
+        body {
+            padding-top: 10px;
+        }
+        .panel-group{
+        margin-bottom:0;
+
+        }
+    </style>
+
+
+</head>
+<body ng-app="cmlt" >
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<!--<script>-->
+    <!--$('body').on('click',function(e){-->
+       <!--console.log('Clicked element is', $(e.target).parents('#logout').length);-->
+        <!--if(!$(e.target).parents('#logout').length)-->
+            <!--$(".popover").hide();-->
+
+
+
+
+
+
+
+    <!--});-->
+
+
+<!--</script>-->
+<div class="container">
+    <div class="row" ng-controller="HeaderCtrl" style="size:11vh" ng-click="locatePosition($event)">
+        <div class="col-sm-4"><a href="/" target="_self"><img src='@routes.Assets.at("images/cmlt-logo.png")' style="height:7.7vh;vertical-align:middle"></a>
+            <!--<span style="font-size:2.2vh;font-weight: bold;;vertical-align:middle">@organization.split(" ")(0)</span>-->
+            <h5 style="display:inline;white-space:nowrap;">
+                <span class="helv-thin fc-darkgray" style="font-size:2.6vh !important;">@organization</span>
+            </h5>
+
+        </div>
+        <div class="col-sm-4" style="text-align:center;" id="logout">
+            <button bs-popover data-trigger="focus" style="padding:0;margin:0;border:0;border-radius: 50%"><img ng-src='@routes.Application.getImage()' style="width:9.5vh;height:9.5vh;border-radius:50%;"   id="imageManager" ></button>
+
+            @*<img src='@routes.Assets.at("images/client_icn.png")' style="width:9.5vh;height:9.5vh;">*@
+            <h3 style="display:inline;white-space:nowrap;">
+                <span class="helv-thin fc-darkgray" style="font-size:5.2vh !important;">@name</span>
+            </h3>
+        </div>
+        <div class="col-sm-2"></div>
+        <div class="col-sm-1"></div>
+        <!--div class="col-sm-1" style="text-align:right;">
+            <a href="/logout" data-method="delete" rel="nofollow" ng-click="logout()" style="line-height: 5vh;"><img src='@routes.Assets.at("images/logout.png")' style="height:4vh;vertical-align:middle"></a>
+        </div-->
+
+        <div ng-if="@a" class="@a col-sm-1" style="text-align:right;padding-right:3vh"> <a style="float:right;width:30px;"
+             ng-init="value = 'collapsed'" ng-click="toggleMenu();value = { 'collapsed': 'expanded', 'expanded':'collapsed'}[value];" data-toggle="collapse" data-target="#demo">
+            <img src='@routes.Assets.at("images/slider_{{value}}.png")' style="width:30px;">
+        </a>
+        </div>
+    </div>
+    <div class="row">
+        <div ng-view></div>
+    </div>
+</div>
+@*<div class="menu" id="menuItem" ng-controller="MenuCtrl" ng-show="menuStatus">*@
+
+    @*<div ng-repeat="sectionItem in menuItems">*@
+        @*<div class="menuitem menu-section-header"><div class="menu-text-head">{{sectionItem.name}}</div></div>*@
+        @*<div class="menuitem" ng-repeat="item in sectionItem.items" ><a href="{{item.link}}" target="_self" class="menu-text1"><div >{{item.name}}</div></a></div>*@
+    @*</div>*@
+@*</div>*@
+</body>
+</html>

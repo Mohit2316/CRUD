@@ -1,0 +1,34 @@
+@(exception: Throwable)<!Doctype html>
+<html>
+        <head>
+            <link href='@routes.Assets.at("stylesheets/40_bootstrap_1024_1366_2048/css/bootstrap.css")' rel="stylesheet">
+            <link href='@routes.Assets.at("stylesheets/main.css")' rel="stylesheet">
+        </head>
+<body>
+
+    <nav class="navbar navbar-default" role="navigation" ng-app="tablePage">
+        <div class="container-fluid" ng-controller="activeClick">
+                <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="navbar-brand"><a href="/home" style="list-style: none">@Messages("home.text")</a></div>
+
+            </div>
+            <ul class="nav pull-right"><li ><a href="/logout" class="btn btn-primary btn-default" role="button">@Messages("sign.out.text")</a></li></ul>
+        </div>
+    </nav>
+<div class="container" style="width:100vw;">
+    <h3>
+        @Messages("error.message")
+    </h3>
+    <a href="/home">@Messages("home.text")</a>
+</div>
+
+
+</body>
+</html>

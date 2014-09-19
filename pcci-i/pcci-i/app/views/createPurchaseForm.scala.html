@@ -1,0 +1,679 @@
+@(loginForm: Form[PurchaseRequestController.CreateForm],dataForm:List[models.Purchase_Request],loggedinUserRole: String)<!DOCTYPE html>
+@import helper._
+<html>
+<head>
+    <title>@Messages("title")</title>
+    <link href='@routes.Assets.at("stylesheets/40_bootstrap_1024_1366_2048/css/bootstrap.css")' rel="stylesheet"/>
+    <style>
+        .container{
+
+            padding-right: 50px;
+        }
+        form{
+            background-color: #F8F8F8;
+            border: 1px #e4e4e4 solid;
+            padding-bottom: 20px;
+
+        }
+        body{
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body onload="window.history.forward(1);">
+@main(loggedinUserRole,"3")
+
+<div class="container" style="width:100vw;">
+<script>
+    $(document).ready(function() {
+    console.log ( "awjdnaiwdnawd" ) ;
+    $ ( "#input06" ).datepicker ( {
+    "dateFormat" : "mm/dd/yy"
+    } ) ;
+    });
+</script>
+
+@if(!dataForm.isEmpty){
+<h1 class="center">@Messages("purchase.update.header")</h1>
+<br/><br/>
+@form(routes.PurchaseRequestController.newRequest(), 'enctype -> "multipart/form-data", 'class -> "form-horizontal") {
+<br/><br/>
+@for(user <- dataForm){
+<script type="text/javascript">
+
+    window.onload=function(){
+    console.log("awjdnaiwdnawd");
+        var populateDates = function(elementId,dateString){
+            console.log('Call function');
+            var date = new Date(dateString+" UTC").toISOString().substring(0, 10);
+            var textfield = document.querySelector(elementId);
+            textfield.value = date;
+
+        };
+        $("#input041").val('@user.requisition_type');
+        $("#input4").val('@user.asset_tag');
+
+        $("#input06").datepicker("setDate", new Date('@user.requested_delivery_date')
+                );
+//        var dateFiller=[
+//            {
+//                id:'#input6',
+//                field:'@user.requested_delivery_date'
+//
+//            },
+//           {
+//                id:'#input13',
+//                field:'@user.getDate_sig_vp'
+//
+//            },{
+//                id:'#input16',
+//                field:'@user.getDate_sign_software_1'
+//            },{
+//                id:'#input18',
+//                field:'@user.getDate_sign_software_2'
+//            }
+//
+//        ];
+//
+//
+//
+//        dateFiller.forEach(function(element,index){
+//            if(element.field.length){
+//                populateDates(element.id,element.field);
+//            }
+//        });
+
+
+
+
+    }
+
+
+
+</script>
+
+
+
+
+<input type="hidden" name="idInput" value="@user.key">
+<div class="form-group">
+    <label  class="control-label col-xs-3">@Messages("request.status")
+
+
+    </label>
+
+    <div class="col-xs-8">
+        <div class="form-control-static">@user.getStatus</div>
+
+
+    </div>
+</div>
+    <div class="form-group">
+
+        <label for="input1" class="control-label col-xs-3">@Messages("project.number")
+        </label>
+        <div class="col-xs-8">
+            <input type="number" class="form-control" id="input1" name="ccp_number" value=@user.cost_Center_Number>
+        </div>
+        </div>
+    <div class="form-group">
+        <label for="input2" class="control-label col-xs-3">@Messages("project.name")
+        </label>
+
+        <div class="col-xs-8">
+            <input type="text" class="form-control" id="input2" name="ccp_name" value='@user.cost_Center_Name'>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="input3" class="control-label col-xs-3">@Messages("account.category")
+
+        </label>
+
+        <div class="col-xs-8">
+            <input type="text" class="form-control" id="input3" name="account_category" value='@user.acc_category'>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="input041" class="control-label col-xs-3">@Messages("requisition.type")
+
+        </label>
+
+        <div class="col-xs-8">
+            <select class="form-control" id="input041" name="requisition_type" value="@user.requisition_type">
+                <option value =@Messages("requisition.options.first")>@Messages("requisition.options.first")</option>
+                <option value =@Messages("requisition.options.second")>@Messages("requisition.options.second")</option>
+                <option value=@Messages("requisition.options.third")>@Messages("requisition.options.third")</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="input4" class="control-label col-xs-3">@Messages("asset.tag")
+
+
+
+        </label>
+
+        <div class="col-xs-8">
+            <select type="number" class="form-control" id="input4" name="asset_tag" value=@user.asset_tag>
+                <option value=@Messages("asset.tag.option.first")>@Messages("asset.tag.option.first")</option>
+                <option value=@Messages("asset.tag.option.second")>@Messages("asset.tag.option.second")</option>
+                </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="input5" class="control-label col-xs-3">@Messages("cost.source.estimate")
+
+
+
+
+        </label>
+
+        <div class="col-xs-8">
+            <input type="number" class="form-control" id="input5" name="cost_estimate" step="0.00001" value=@user.cost_estimate>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="input051" class="control-label col-xs-3">@Messages("attachments.text")
+
+        </label>
+        <div class="col-xs-8">
+            <input type="file" id="input051" name="attachment">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="input06" class="control-label col-xs-3">@Messages("request.delivery.date")
+
+
+
+
+        </label>
+
+        <div class="col-xs-8">
+            <input type="text" class="form-control" id="input06" name="delivery_date" value="" required>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="input411" class="control-label col-xs-3">@Messages("detailed.item.description")
+
+
+
+
+        </label>
+        <div class="col-xs-8">
+            <input type="text" class="form-control" id="input411" name="detailed_item" value='@user.detailed_item'>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="input7" class="control-label col-xs-3" >@Messages("quantity.text")
+
+
+
+
+        </label>
+
+        <div class="col-xs-8">
+            <input type="number" class="form-control" id="input7" name="quantity" value=@user.quantity>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="input8" class="control-label col-xs-3">@Messages("vendor.name")
+         </label>
+
+        <div class="col-xs-8">
+            <input type="text" class="form-control" id="input8" name="vendor_name" value='@user.vendor_name'>
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        <label  class="control-label col-xs-3">@Messages("approver.text")
+
+
+
+
+        </label>
+
+        <div class="col-xs-8">
+            <div class="form-control-static">@user.getApprover</div>
+        </div>
+    </div>
+@if(user.showApproveButton(user.getKey,loggedinUserRole) || user.showDisApproveButton(user.getKey,loggedinUserRole)){
+<div class="form-group">
+
+    <label  class="control-label col-xs-3">@Messages("requester.text")
+
+
+
+
+    </label>
+
+    <div class="col-xs-8">
+        <div class="form-control-static">@user.user.name</div>
+    </div>
+</div>
+}
+    <div class="form-group">
+        <label  class="control-label col-xs-3">@Messages("po.number")
+
+
+
+
+
+        </label>
+
+        <div class="col-xs-8">
+            <div class="form-control-static">@user.getPo_number</div>
+        </div>
+    </div>
+
+    <!--<div class="form-group">-->
+        <!--<label for="input11" class="control-label col-xs-3">REQ # (to be completed by Office Manager)-->
+
+
+
+
+
+        <!--</label>-->
+
+        <!--<div class="col-xs-8">-->
+            <!--<input type="text" class="form-control" id="input11" name="req" value='@user.reqId'>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+        <!--<label for="input12" class="control-label col-xs-3">Core VP Signature:-->
+
+
+
+
+
+        <!--</label>-->
+
+        <!--<div class="col-xs-8">-->
+            <!--<input type="text" class="form-control" id="input12" name="vp_sign" value='@user.vp_signature'>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+        <!--<label for="input13" class="control-label col-xs-3">Date:-->
+
+
+
+
+
+        <!--</label>-->
+
+        <!--<div class="col-xs-8">-->
+            <!--<input type="date" class="form-control" id="input13" name="vp_sign_date" value=@user.date_sig_vp>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="form-group">-->
+        <!--<label for="input14" class="control-label col-xs-3">Core VP Typed Name:-->
+
+
+
+
+
+        <!--</label>-->
+
+        <!--<div class="col-xs-8">-->
+            <!--<input type="text" class="form-control" id="input14" name="vp_typed_name" value='@user.vp_typed_name'>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--<div class="form-group">-->
+    <!--<label for="input15" class="control-label col-xs-3">All Software Purchases must be Approved By Kim Gerra (Signature):-->
+
+
+
+
+
+
+    <!--</label>-->
+
+    <!--<div class="col-xs-8">-->
+        <!--<input type="text" class="form-control" id="input15" name="name_1" value='@user.software_approver_signature_1'>-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+    <!--<label for="input16" class="control-label col-xs-3">Date:-->
+
+
+
+
+
+    <!--</label>-->
+
+    <!--<div class="col-xs-8">-->
+        <!--<input type="date" class="form-control" id="input16" name="date_1" value='@user.date_sign_software_1'>-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+    <!--<label for="input17" class="control-label col-xs-3">All Software Purchases must be Approved By Vaidyanatha Siva (Signature):-->
+
+
+
+
+
+
+    <!--</label>-->
+
+    <!--<div class="col-xs-8">-->
+        <!--<input type="text" class="form-control" id="input17" name="name_2" value='@user.software_approver_signature_2'>-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+    <!--<label for="input18" class="control-label col-xs-3" >Date:-->
+
+
+
+
+
+    <!--</label>-->
+
+    <!--<div class="col-xs-8">-->
+        <!--<input type="date" class="form-control" id="input18" name="date_2" value='@user.date_sign_software_2'>-->
+    <!--</div>-->
+
+<!--</div>-->
+<div class="form-group">
+    <label for="input0180u" class="control-label col-xs-3" >@Messages("notes.text")
+    </label>
+
+    <div class="col-xs-8">
+        <textarea class="form-control" id="input0180u" name="notes" rows="10">@user.notes</textarea>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <div class="col-xs-offset-5 col-xs-10">
+        @if(user.status==0 || user.status==1){
+        <button type="submit" class="btn btn-primary btn-default">@Messages("submit.text")</button>
+        }
+
+        @if(user.status==3 || user.status==4){
+        <button type="submit" class="btn btn-primary btn-default">@Messages("resubmit.text")</button>
+
+        }
+    </div>
+</div>
+
+}
+}
+}
+@if(dataForm.isEmpty){
+<h1 class="center">@Messages("purchase.create.header")</h1>
+<br/><br/>
+@form(routes.PurchaseRequestController.newRequest(), 'enctype -> "multipart/form-data", 'class -> "form-horizontal",'id ->"createForm") {
+
+<br/><br/>
+<input type="hidden" name="idInput" value="">
+<div class="form-group">
+    <label for="input01" class="control-label col-xs-3">@Messages("project.number")
+    </label>
+    <div class="col-xs-8">
+        <input type="number" class="form-control" id="input01" name="ccp_number" >
+    </div>
+</div>
+<div class="form-group">
+    <label for="input02" class="control-label col-xs-3">@Messages("project.name")
+    </label>
+
+    <div class="col-xs-8">
+        <input type="text" class="form-control" id="input02" name="ccp_name" >
+    </div>
+</div>
+<div class="form-group">
+    <label for="input03" class="control-label col-xs-3">@Messages("account.category")
+
+    </label>
+
+    <div class="col-xs-8">
+        <input type="text" class="form-control" id="input03" name="account_category">
+    </div>
+</div>
+<div class="form-group">
+    <label for="input041" class="control-label col-xs-3">@Messages("requisition.type")
+
+
+    </label>
+
+    <div class="col-xs-8">
+        <select class="form-control" id="input041" name="requisition_type" >
+            <option value =@Messages("requisition.options.first")>@Messages("requisition.options.first")</option>
+            <option value =@Messages("requisition.options.second")>@Messages("requisition.options.second")</option>
+            <option value=@Messages("requisition.options.third")>@Messages("requisition.options.third")</option>
+            </select>
+    </div>
+</div>
+<div class="form-group">
+    <label for="input04" class="control-label col-xs-3">@Messages("asset.tag")
+
+
+
+    </label>
+
+    <div class="col-xs-8">
+        <select class="form-control" id="input04" name="asset_tag" >
+            <option value=@Messages("asset.tag.option.first")>@Messages("asset.tag.option.first")</option>
+            <option value=@Messages("asset.tag.option.second")>@Messages("asset.tag.option.second")</option>
+            </select>
+    </div>
+</div>
+<div class="form-group">
+    <label for="input05" class="control-label col-xs-3">@Messages("cost.source.estimate")
+
+
+
+
+    </label>
+
+    <div class="col-xs-8">
+        <input type="number" class="form-control" id="input05" name="cost_estimate" step="0.00001" >
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="input051" class="control-label col-xs-3">@Messages("attachments.text")
+
+    </label>
+    <div class="col-xs-8">
+        <input type="file" id="input051" name="attachment">
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="input06" class="control-label col-xs-3">@Messages("request.delivery.date")
+
+
+
+
+    </label>
+
+    <div class="col-xs-8">
+        <input type="text" class="form-control" id="input06" name="delivery_date" required>
+    </div>
+</div>
+<div class="form-group">
+    <label for="input071" class="control-label col-xs-3">@Messages("detailed.item.description")
+
+
+
+
+    </label>
+    <div class="col-xs-8">
+        <input type="text" class="form-control" id="input071" name="detailed_item" >
+    </div>
+</div>
+<div class="form-group">
+    <label for="input07" class="control-label col-xs-3" >@Messages("quantity.text")
+
+
+
+
+    </label>
+
+    <div class="col-xs-8">
+        <input type="number" class="form-control" id="input07" name="quantity" >
+    </div>
+</div>
+<div class="form-group">
+    <label for="input08" class="control-label col-xs-3">@Messages("vendor.name")
+    </label>
+
+    <div class="col-xs-8">
+        <input type="text" class="form-control" id="input08" name="vendor_name" >
+    </div>
+</div>
+<!--<div class="form-group">-->
+    <!--<label for="input09" class="control-label col-xs-3">Approved by:-->
+
+
+
+
+    <!--</label>-->
+
+    <!--<div class="col-xs-8">-->
+        <!--<input type="text" class="form-control" id="input09" name="approver" >-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+    <!--<label for="input010" class="control-label col-xs-2">PO # (to be completed by Office Manager)-->
+
+
+
+
+
+    <!--</label>-->
+
+    <!--<div class="col-xs-4">-->
+        <!--<input type="text" class="form-control" id="input010" name="po_number" >-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+    <!--<label for="input011" class="control-label col-xs-3">REQ # (to be completed by Office Manager)-->
+
+
+
+
+
+    <!--</label>-->
+
+    <!--<div class="col-xs-8">-->
+        <!--<input type="text" class="form-control" id="input011" name="req" >-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+    <!--<label for="input012" class="control-label col-xs-3">Core VP Signature:-->
+
+
+
+
+
+    <!--</label>-->
+
+    <!--<div class="col-xs-8">-->
+        <!--<input type="text" class="form-control" id="input012" name="vp_sign" >-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+    <!--<label for="input013" class="control-label col-xs-3">Date:-->
+
+
+
+
+
+    <!--</label>-->
+
+    <!--<div class="col-xs-8">-->
+        <!--<input type="date" class="form-control" id="input013" name="vp_sign_date" >-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+    <!--<label for="input014" class="control-label col-xs-3">Core VP Typed Name:-->
+
+
+
+
+
+    <!--</label>-->
+
+    <!--<div class="col-xs-8">-->
+        <!--<input type="text" class="form-control" id="input014" name="vp_typed_name" >-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+    <!--<label for="input015" class="control-label col-xs-3">All Software Purchases must be Approved By Kim Gerra (Signature):-->
+
+
+
+
+
+
+    <!--</label>-->
+
+    <!--<div class="col-xs-8">-->
+        <!--<input type="text" class="form-control" id="input015" name="name_1" >-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+    <!--<label for="input016" class="control-label col-xs-3">Date:-->
+
+
+
+
+
+    <!--</label>-->
+
+    <!--<div class="col-xs-8">-->
+        <!--<input type="date" class="form-control" id="input016" name="date_1" >-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+    <!--<label for="input017" class="control-label col-xs-3">All Software Purchases must be Approved By Vaidyanatha Siva (Signature):-->
+
+
+
+
+
+
+    <!--</label>-->
+
+    <!--<div class="col-xs-8">-->
+        <!--<input type="text" class="form-control" id="input017" name="name_2" >-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+    <!--<label for="input018" class="control-label col-xs-3" >Date:-->
+
+
+
+
+
+    <!--</label>-->
+
+    <!--<div class="col-xs-8">-->
+        <!--<input type="date" class="form-control" id="input018" name="date_2" >-->
+    <!--</div>-->
+<!--</div>-->
+
+<div class="form-group">
+    <label for="input0180" class="control-label col-xs-3" >@Messages("notes.text")
+    </label>
+
+    <div class="col-xs-8">
+        <textarea class="form-control" id="input0180" name="notes" rows="10" placeholder='@Messages("notes.placeholder")'></textarea>
+    </div>
+</div>
+
+    <div class="form-group">
+        <div class="col-xs-offset-5 col-xs-10">
+            <button type="submit" class="btn btn-primary btn-default">@Messages("submit.text")</button>
+        </div>
+    </div>
+
+}
+}
+    </div>
+
+
+</body>
+</html>

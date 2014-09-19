@@ -1,0 +1,372 @@
+@(dataForm:List[models.Purchase_Request],loggedinUserRole:String)<!DOCTYPE html>
+@import helper._
+<html>
+<head>
+    <link href='@routes.Assets.at("stylesheets/40_bootstrap_1024_1366_2048/css/bootstrap.css")' rel="stylesheet"/>
+    <style>
+        table{
+            width:100vw;
+            background-color: #F8F8F8;
+            border: 1px #e4e4e4 solid;
+
+        }
+        .form-group .row{
+            padding-left: 40px;
+        }
+
+    </style>
+</head>
+<body onload="window.history.forward(1);" style="overflow-x: hidden;">
+
+@main(loggedinUserRole,"3")
+<div class="container" style="width:100vw;">
+
+
+
+
+@for(user <- dataForm){
+
+
+@if(!dataForm.isEmpty){
+<h1 class="center">@Messages("purchase.request.number")@user.getPo_number()</h1>
+<br/><br/>
+
+<table class="table table-bordered" style="width:90vw;">
+    <tr>
+
+        <th scope="row" class="col-xs-3">@Messages("po.number")</th>
+        <td class="col-xs-8">
+            @user.getPo_number
+        </td>
+
+    </tr>
+    <tr>
+
+        <th scope="row" class="col-xs-3">@Messages("request.status")</th>
+        <td class="col-xs-8">
+            @user.getStatus
+        </td>
+
+    </tr>
+    <tr>
+
+        <th scope="row" class="col-xs-3">@Messages("project.number")</th>
+            <td class="col-xs-8">
+                @user.cost_Center_Number
+            </td>
+
+     </tr>
+
+    <tr>
+
+        <th scope="row" class="col-xs-3">@Messages("project.name")</th>
+        <td class="col-xs-8">
+            @user.cost_Center_Name
+        </td>
+
+    </tr>
+
+    <tr>
+
+    <th scope="row" class="col-xs-3">@Messages("account.category")</th>
+    <td class="col-xs-8">
+        @user.acc_category
+    </td>
+
+</tr><tr>
+
+    <th scope="row" class="col-xs-3">@Messages("requisition.type")</th>
+    <td class="col-xs-8">
+        @user.requisition_type
+    </td>
+
+</tr><tr>
+
+    <th scope="row" class="col-xs-3">@Messages("asset.tag")</th>
+    <td class="col-xs-8">
+        @user.asset_tag
+    </td>
+
+</tr><tr>
+
+    <th scope="row" class="col-xs-3">@Messages("cost.source.estimate")</th>
+    <td class="col-xs-8">
+        @user.cost_estimate
+    </td>
+
+</tr><tr>
+
+    <th scope="row" class="col-xs-3">@Messages("file.attachment.text")</th>
+    <td class="col-xs-8">
+    @if(user.fileID) {
+        <a href="/assets/uploads/@user.fileID">@user.getPo_number</a>
+    }
+    </td>
+
+</tr><tr>
+
+    <th scope="row" class="col-xs-3">@Messages("request.delivery.date")</th>
+    <td class="col-xs-8">
+        @user.getRequested_date
+    </td>
+
+</tr><tr>
+
+    <th scope="row" class="col-xs-3">@Messages("detailed.item.description")</th>
+    <td class="col-xs-8">
+        @user.detailed_item
+    </td>
+
+</tr><tr>
+
+    <th scope="row" class="col-xs-3">@Messages("quantity")</th>
+    <td class="col-xs-8">
+        @user.quantity
+    </td>
+
+</tr><tr>
+
+    <th scope="row" class="col-xs-3">@Messages("vendor.name")</th>
+    <td class="col-xs-8">
+        @user.vendor_name
+    </td>
+
+</tr><tr>
+
+    <th scope="row" class="col-xs-3">@Messages("approver.text")</th>
+    <td class="col-xs-8">
+        @user.getApprover
+    </td>
+
+</tr><tr>
+
+    <th scope="row" class="col-xs-3">REQ # (to be completed by Office Manager)</th>
+    <td class="col-xs-8">
+        @user.reqId
+    </td>
+    <tr>
+
+        <th scope="row" class="col-xs-3">Notes</th>
+        <td class="col-xs-8">
+            @user.notes
+        </td>
+
+    </tr>
+    @if(loggedinUserRole=="financer" || loggedinUserRole=="approver" ){
+    <tr>
+
+        <th scope="row" class="col-xs-3">@Messages("requester.text")</th>
+        <td class="col-xs-8">
+            @user.user.name
+        </td>
+
+    </tr>
+    }
+<!--</tr><tr>-->
+
+    <!--<th scope="row" class="col-xs-3">Core VP Signature:</th>-->
+    <!--<td class="col-xs-8">-->
+        <!--@user.vp_signature-->
+    <!--</td>-->
+
+
+<!--</tr>-->
+    <!--<tr>-->
+
+        <!--<th scope="row" class="col-xs-3">Date:</th>-->
+        <!--<td class="col-xs-8">-->
+            <!--@user.getDate_sig_vp-->
+        <!--</td>-->
+
+
+    <!--</tr><tr>-->
+
+        <!--<th scope="row" class="col-xs-3">Core VP Typed Name:</th>-->
+        <!--<td class="col-xs-8">-->
+            <!--@user.vp_typed_name-->
+        <!--</td>-->
+
+
+    <!--</tr><tr>-->
+
+        <!--<th scope="row" class="col-xs-3">All Software Purchases must be Approved By Kim Gerra (Signature):</th>-->
+        <!--<td class="col-xs-8">-->
+            <!--@user.software_approver_signature_1-->
+        <!--</td>-->
+
+
+    <!--</tr><tr>-->
+
+        <!--<th scope="row" class="col-xs-3">Date:</th>-->
+        <!--<td class="col-xs-8">-->
+            <!--@user.getDate_sign_software_1()-->
+        <!--</td>-->
+
+
+    <!--</tr><tr>-->
+
+        <!--<th scope="row" class="col-xs-3">All Software Purchases must be Approved By Vaidyanatha Siva (Signature):</th>-->
+        <!--<td class="col-xs-8">-->
+            <!--@user.software_approver_signature_2-->
+        <!--</td>-->
+
+
+    <!--</tr><tr>-->
+
+        <!--<th scope="row" class="col-xs-3">Date:</th>-->
+        <!--<td class="col-xs-8">-->
+            <!--@user.getDate_sign_software_2()-->
+        <!--</td>-->
+
+
+    </tr>
+    @if(user.showApproverCommentButton(user.getKey,loggedinUserRole)){
+        <form action="/approver/comment" method="POST" id="commentApproverForm">
+            <input type="hidden" name="idForm" value=@user.getKey>
+            <tr>
+                <th scope="row" class="col-xs-3">@Messages("approver.comment.text")</th>
+                <td class="col-xs-8">
+                    <textarea name="commentApprover" cols="140" rows="5" placeholder='@Messages("comments.placeholder")' required></textarea>
+                </td>
+            </tr>
+        </form>
+    }
+    @if(user.showDisApproveButton(user.getKey,loggedinUserRole)){
+    <form action="/approver/reject" method="POST" id="rejectApproverForm">
+    <input type="hidden" name="idForm" value=@user.getKey>
+    <!--<tr>-->
+        <!--<th scope="row" class="col-xs-3">@Messages("approver.reject.text")</th>-->
+        <!--<td class="col-xs-8">-->
+            <!--<textarea name="commentApproverReject" cols="140" rows="5" placeholder='@Messages("comments.placeholder")' required></textarea>-->
+        <!--</td>-->
+    <!--</tr>-->
+    </form>
+    }
+    @if(user.showApproveButton(user.getKey,loggedinUserRole)){
+    <form action="/approver/accept" method="POST" id="acceptApproverForm">
+    <input type="hidden" name="idForm" value=@user.getKey>
+    <!--<tr>-->
+        <!--<th scope="row" class="col-xs-3">@Messages("approver.accept.text")</th>-->
+        <!--<td class="col-xs-8">-->
+            <!--<textarea name="commentApproverAccept" cols="140" rows="5" placeholder='@Messages("comments.placeholder")' required></textarea>-->
+        <!--</td>-->
+    <!--</tr>-->
+    </form>
+    }
+    @if(loggedinUserRole=="financer" && user.status==1){
+        <form action="/financer/comment" method="POST" id="CommentForm">
+            <input type="hidden" name="idForm" value=@user.getKey>
+
+            <tr>
+                <th scope="row" class="col-xs-3">@Messages("financer.comment.text")</th>
+                <td class="col-xs-8">
+                    <textarea name="financerComment" cols="140" rows="5" placeholder='@Messages("comments.placeholder")' required></textarea>
+                </td>
+            </tr>
+        </form>
+    <form action="/financer/accept" method="POST" id="acceptForm">
+        <input type="hidden" name="idForm" value=@user.getKey>
+    <tr>
+        <th scope="row" class="col-xs-3">@Messages("financer.payment.text")</th>
+        <td class="col-xs-8">
+
+            <select class="form-control" name="paymentMethod" required>
+                <option value='@Messages("financer.payment.option.first")'>@Messages("financer.payment.option.first")</option>
+                <option value='@Messages("financer.payment.option.second")'>@Messages("financer.payment.option.second")</option>
+                <option value='@Messages("financer.payment.option.third")'>@Messages("financer.payment.option.third")</option>
+
+            </select>
+        </td>
+
+
+
+    </tr>
+    <tr>
+        <th scope="row" class="col-xs-3">@Messages("financer.accept.text")</th>
+        <td class="col-xs-8">
+            <textarea name="comment" cols="140" rows="5" placeholder='@Messages("comments.placeholder")'  required></textarea>
+        </td>
+    </tr>
+        </form>
+    <form action="/financer/reject" method="POST" id="rejectForm">
+        <input type="hidden" name="idForm" value=@user.getKey>
+
+        <!--<tr>-->
+            <!--<th scope="row" class="col-xs-3">@Messages("financer.reject.text")</th>-->
+            <!--<td class="col-xs-8">-->
+                <!--<textarea name="commentReject" cols="140" rows="5" placeholder='@Messages("comments.placeholder")'  required></textarea>-->
+            <!--</td>-->
+        <!--</tr>-->
+    </form>
+
+
+
+    }
+    @if(loggedinUserRole=="financer" && user.status==2){
+    <tr>
+        <th scope="row" class="col-xs-3">@Messages("financer.payment.text")</th>
+        <td class="col-xs-8">
+
+            @user.payment_method
+        </td>
+
+
+
+    </tr>
+    <!--<tr>-->
+        <!--<th scope="row" class="col-xs-3">@Messages("financer.comment.text")</th>-->
+        <!--<td class="col-xs-8">-->
+            <!--@user.comment_Financer_accept-->
+        <!--</td>-->
+    <!--</tr>-->
+    }
+
+
+
+</table>
+    <div class="row" style="padding-left: 40vw;padding-bottom: 20vh;">
+        @if(user.showUpdateButton(user.getKey,loggedinUserRole)){  <!--Not Submitted normal user-->
+        <a href="/update/@user.key" class="btn btn-primary btn-default" role="button"><i class="fa fa-pencil-square-o fa-lg"></i>@Messages("viewform.update.button.text")</a>
+        <!--button class="btn btn-default"><a href="/delete/@user.key">Delete</a></button-->
+
+        }
+        @if(user.showApproveButton(user.getKey,loggedinUserRole)){
+        <!--<a href="/approve/@user.key" class="btn btn-primary btn-default" role="button">Approve</a>-->
+        <button type="submit" class="btn btn-success btn-default" form="acceptApproverForm">@Messages("viewform.approver.accept.button.text")</button>
+        }
+        @if(user.showDisApproveButton(user.getKey,loggedinUserRole)){
+        <!--<a href="/approver/reject/@user.key" class="btn btn-primary btn-default" role="button">Reject</a>-->
+        <button type="submit" class="btn btn-danger btn-default" form="rejectApproverForm">@Messages("viewform.approver.reject.button.text")</button>
+        }
+        @if(user.showApproverCommentButton(user.getKey,loggedinUserRole)){
+        <!--<a href="/approver/reject/@user.key" class="btn btn-primary btn-default" role="button">Comment</a>-->
+        <button type="submit" class="btn btn-success btn-default" form="commentApproverForm">@Messages("viewform.comment.button.text")</button>
+        }
+        @if(user.showProcessButton(user.getKey,loggedinUserRole)) {
+                <!--Submitted financer-->
+                <!--<a href="/process/@user.key" class="btn btn-primary btn-default" role="button">Process </a>
+            -->
+            <button type="submit" class="btn btn-success btn-default" form="acceptForm">@Messages("viewform.financer.accept.button.text")</button>
+                <!--<a href="/financer/reject/@user.key" class="btn btn-primary btn-default" role="button">Reject </a>
+            -->
+            <button type="submit" class="btn btn-danger btn-default" form="rejectForm">@Messages("viewform.financer.reject.button.text")</button>
+        }
+        @if(user.showProcessButton(user.getKey,loggedinUserRole)){   <!--Submitted financer-->
+        <!--<a href="/process/@user.key" class="btn btn-primary btn-default" role="button">Process</a>-->
+        <button type="submit" class="btn btn-success btn-default" form="CommentForm">@Messages("viewform.comment.button.text")</button>
+
+        }
+    </div>
+}
+
+
+
+
+
+
+    </div>
+
+
+}
+</body>
+</html>
